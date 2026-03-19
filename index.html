@@ -338,6 +338,21 @@
         margin-top: 0;
       }
 
+      .img-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .img-grid img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(103, 75, 52, 0.12);
+      }
+
       .footer-note {
         margin-top: 24px;
         padding: 18px 20px;
@@ -502,16 +517,15 @@
           </tbody>
         </table>
 
-        <div class="image-slot">
-          <strong>Ảnh minh hoạ</strong>
-          <p>Paste ảnh base64 cho Trang Chủ.</p>
-          <code>&lt;img src="data:image/png;base64,PASTE_BASE64_HERE" alt="Ảnh trang chủ" /&gt;</code>
-          <img
-            class="editable-image"
-            src=""
-            alt="Vị trí chèn ảnh trang chủ"
-            data-base64-placeholder="PASTE_BASE64_HERE"
-          />
+        <div class="img-grid">
+          <img src="menu.png"               alt="Menu" />
+          <img src="1.slide.png"            alt="Slide các ảnh" />
+          <img src="2.phuongphap.png"       alt="Phương pháp dạy học" />
+          <img src="3.hoatdongcuabe.png"    alt="Hoạt động của bé" />
+          <img src="4.cosovatchat.png"      alt="Cơ sở hạ tầng" />
+          <img src="5.thongbaotintuc.png"   alt="Thông báo &amp; tin tức" />
+          <img src="6.chiase.png"           alt="Chia sẻ của phụ huynh" />
+          <img src="7.lienhe.png"           alt="Thông tin liên hệ &amp; tư vấn" />
         </div>
       </section>
 
@@ -534,7 +548,7 @@
 
           <article class="item">
             <h3>Ảnh minh hoạ</h3>
-            <div class="image-slot">
+            <!-- <div class="image-slot">
               <strong>Paste base64 cho trang Giới Thiệu</strong>
               <code>&lt;img src="data:image/jpeg;base64,PASTE_BASE64_HERE" alt="Ảnh giới thiệu" /&gt;</code>
               <img
@@ -543,7 +557,7 @@
                 alt="Vị trí chèn ảnh giới thiệu"
                 data-base64-placeholder="PASTE_BASE64_HERE"
               />
-            </div>
+            </div> -->
           </article>
         </div>
       </section>
@@ -566,7 +580,7 @@
 
           <article class="item">
             <h3>Ảnh minh hoạ</h3>
-            <div class="image-slot">
+            <!-- <div class="image-slot">
               <strong>Paste base64 cho trang Chương Trình Học</strong>
               <code>&lt;img src="data:image/jpeg;base64,PASTE_BASE64_HERE" alt="Ảnh chương trình học" /&gt;</code>
               <img
@@ -575,7 +589,7 @@
                 alt="Vị trí chèn ảnh chương trình học"
                 data-base64-placeholder="PASTE_BASE64_HERE"
               />
-            </div>
+            </div> -->
           </article>
         </div>
       </section>
@@ -598,7 +612,7 @@
 
           <article class="item">
             <h3>Ảnh minh hoạ</h3>
-            <div class="image-slot">
+            <!-- <div class="image-slot">
               <strong>Paste base64 cho trang Tin Tức &amp; Thông Báo</strong>
               <code>&lt;img src="data:image/jpeg;base64,PASTE_BASE64_HERE" alt="Ảnh tin tức" /&gt;</code>
               <img
@@ -607,7 +621,7 @@
                 alt="Vị trí chèn ảnh tin tức"
                 data-base64-placeholder="PASTE_BASE64_HERE"
               />
-            </div>
+            </div> -->
           </article>
         </div>
       </section>
@@ -629,7 +643,7 @@
 
           <article class="item">
             <h3>Ảnh minh hoạ</h3>
-            <div class="image-slot">
+            <!-- <div class="image-slot">
               <strong>Paste base64 cho trang Thư Viện</strong>
               <code>&lt;img src="data:image/jpeg;base64,PASTE_BASE64_HERE" alt="Ảnh thư viện" /&gt;</code>
               <img
@@ -638,7 +652,7 @@
                 alt="Vị trí chèn ảnh thư viện"
                 data-base64-placeholder="PASTE_BASE64_HERE"
               />
-            </div>
+            </div> -->
           </article>
         </div>
       </section>
@@ -660,7 +674,7 @@
 
           <article class="item">
             <h3>Ảnh minh hoạ</h3>
-            <div class="image-slot">
+            <!-- <div class="image-slot">
               <strong>Paste base64 cho trang Tuyển Sinh</strong>
               <code>&lt;img src="data:image/jpeg;base64,PASTE_BASE64_HERE" alt="Ảnh tuyển sinh" /&gt;</code>
               <img
@@ -669,7 +683,7 @@
                 alt="Vị trí chèn ảnh tuyển sinh"
                 data-base64-placeholder="PASTE_BASE64_HERE"
               />
-            </div>
+            </div> -->
           </article>
         </div>
       </section>
@@ -693,7 +707,7 @@
 
           <article class="item">
             <h3>Ảnh minh hoạ</h3>
-            <div class="image-slot">
+            <!-- <div class="image-slot">
               <strong>Paste base64 cho trang Liên Hệ</strong>
               <code>&lt;img src="data:image/png;base64,PASTE_BASE64_HERE" alt="Ảnh liên hệ" /&gt;</code>
               <img
@@ -702,16 +716,10 @@
                 alt="Vị trí chèn ảnh liên hệ"
                 data-base64-placeholder="PASTE_BASE64_HERE"
               />
-            </div>
+            </div> -->
           </article>
         </div>
       </section>
-
-      <div class="footer-note">
-        Hướng dẫn nhanh: mở file HTML này trong trình duyệt, tìm các khu vực có nhãn
-        "Paste base64", sau đó thay giá trị `src=""` của thẻ `img` bằng chuỗi
-        `data:image/jpeg;base64,...` hoặc `data:image/png;base64,...` tùy theo định dạng ảnh.
-      </div>
     </main>
   </body>
 </html>
