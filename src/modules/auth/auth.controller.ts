@@ -1,6 +1,16 @@
-import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+  Request
+} from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { LoginDto } from './dto/login.dto'
+import { JwtAuthGuard } from './jwt-auth.guard'
 
 // @Controller('auth') nghĩa là tất cả các route trong class này
 // đều có prefix là /auth. Ví dụ: POST /auth/login
@@ -21,5 +31,17 @@ export class AuthController {
   signIn(@Body() signInDto: LoginDto) {
     // Gọi sang Service để xử lý logic đăng nhập, trả kết quả về cho client
     return this.authService.login(signInDto.username, signInDto.password)
+  }
+
+  // @UseGuards(JwtAuthGuard): bảo vệ route này
+  // Request không có token hoặc token hết hạn/sai → tự động trả về 401, không vào hàm
+  @UseGuards(JwtAuthGuard)
+  // @Get('profile'): xử lý HTTP GET /auth/profile
+  @Get('profile')
+  // @Request() inject toàn bộ HTTP request object vào tham số req
+  // Nhờ JwtAuthGuard chạy trước, req.user đã được NestJS gán sẵn
+  // với dữ liệu từ JwtStrategy.validate(): { userId, username }
+  getProfile(@Request() req: { user: { userId: number; username: string } }) {
+    return req.user
   }
 }

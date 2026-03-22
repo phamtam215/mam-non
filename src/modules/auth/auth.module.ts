@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { AuthController } from './auth.controller'
 import { JwtModule } from '@nestjs/jwt'
+import { JwtStrategy } from './jwt.strategy'
 
 // @Module() khai báo metadata cho module:
 // - imports: các module bên ngoài cần dùng (ở đây là JwtModule để tạo và verify token)
@@ -17,7 +18,7 @@ import { JwtModule } from '@nestjs/jwt'
       signOptions: { expiresIn: '1d' } // Token có hạn trong 1 ngày
     })
   ],
-  providers: [AuthService], // Đăng ký AuthService để NestJS quản lý và inject khi cần
+  providers: [AuthService, JwtStrategy], // Đăng ký AuthService và JwtStrategy để NestJS quản lý và inject khi cần
   controllers: [AuthController] // Đăng ký AuthController để NestJS biết route nào cần xử lý
 })
 export class AuthModule {}
