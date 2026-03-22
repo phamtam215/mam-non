@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { PrismaModule } from './prisma/prisma.module'
+import { AuthModule } from './modules/auth/auth.module'
 
 /**
  * AppModule là "root module" — điểm khởi đầu của toàn bộ ứng dụng NestJS.
@@ -17,7 +18,7 @@ import { PrismaModule } from './prisma/prisma.module'
 @Module({
   // Import PrismaModule để toàn bộ app có thể dùng PrismaService
   // (vì PrismaModule được đánh dấu @Global, chỉ cần import 1 lần ở đây)
-  imports: [PrismaModule],
+  imports: [PrismaModule, AuthModule],
   controllers: [AppController],
   providers: [AppService]
 })
