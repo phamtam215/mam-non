@@ -3,1189 +3,870 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trường Mầm Non Thế Hệ Mới – Chất Lượng Cao</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <title>Admin – Thế Hệ Mới Preschool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset & Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: "Nunito", sans-serif; color: #222; background: #fff; }
-    img { display: block; max-width: 100%; }
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    button { cursor: pointer; border: none; background: none; font-family: inherit; }
-
-    /* ── Variables ── */
     :root {
-      --red:     #F86506;
-      --red-dark:#d45000;
-      --green:   #34A469;
-      --teal:    #009EFF;
-      --orange:  #F86506;
-      --yellow:  #F8BA03;
-      --gray:    #FFFBE8;
-      --text:    #333;
-      --muted:   #777;
-      --max:     1240px;
+      --orange: #F86506;
+      --green:  #34A469;
+      --blue:   #009EFF;
+      --yellow: #F8BA03;
+      --cream:  #FFFBE8;
+      --bg:     #f4f6f9;
+      --sidebar:#1a1a2e;
+      --card:   #fff;
+      --border: #e5e7eb;
+      --text:   #1f2937;
+      --muted:  #6b7280;
+      --radius: 12px;
     }
 
-    /* ── Utility ── */
-    .container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    .section { padding: 72px 0; }
-    .section-title {
-      text-align: center;
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 800;
-      color: var(--red);
-      margin-bottom: 12px;
-    }
-    .section-subtitle {
-      text-align: center;
-      color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 48px;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--orange);
-      color: #fff;
-      padding: 14px 32px;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 15px;
-      transition: background .2s, transform .2s;
-    }
-    .btn-primary:hover { background: #d45000; transform: translateY(-2px); }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 2px solid var(--red);
-      color: var(--red);
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 14px;
-      transition: all .2s;
-    }
-    .btn-outline:hover { background: var(--red); color: #fff; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Nunito", sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    input, select, textarea, button { font-family: inherit; }
 
-    /* ══════════════════════════
-       HEADER / NAV
-    ══════════════════════════ */
-    #header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 240px;
+      background: var(--sidebar);
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 50;
+      overflow-y: auto;
+    }
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 18px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .sidebar-brand img { width: 40px; height: 40px; border-radius: 50%; }
+    .sidebar-brand span { font-size: 13.5px; font-weight: 800; color: #fff; line-height: 1.3; }
+    .sidebar-brand small { display: block; font-size: 10px; font-weight: 400; color: #94a3b8; }
+
+    .sidebar-menu { padding: 16px 0; flex: 1; }
+    .menu-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #64748b;
+      padding: 12px 18px 6px;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #94a3b8;
+      cursor: pointer;
+      border-radius: 0;
+      transition: background .15s, color .15s;
+      border-left: 3px solid transparent;
+    }
+    .menu-item:hover { background: rgba(255,255,255,.05); color: #e2e8f0; }
+    .menu-item.active { background: rgba(248,101,6,.12); color: var(--orange); border-left-color: var(--orange); }
+    .menu-icon { font-size: 16px; flex-shrink: 0; }
+
+    .sidebar-footer {
+      padding: 16px 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-size: 12px;
+      color: #475569;
+    }
+
+    /* ── Main ── */
+    .main {
+      margin-left: 240px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topbar {
       background: #fff;
-      border-bottom: 3px solid var(--red);
-      box-shadow: 0 2px 12px rgba(0,0,0,.08);
-    }
-    .header-inner {
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 62px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 100px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
-    .logo {
+    .topbar h1 { font-size: 17px; font-weight: 800; color: var(--text); }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: opacity .15s, transform .15s;
+    }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-green   { background: var(--green);  color: #fff; }
+    .btn-outline { background: #fff; color: var(--text); border: 1.5px solid var(--border); }
+    .btn-danger  { background: #fee2e2; color: #dc2626; }
+    .btn-sm      { padding: 5px 12px; font-size: 12px; border-radius: 6px; }
+
+    .content { padding: 28px; flex: 1; }
+
+    /* ── Panel ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-header h2 { font-size: 15px; font-weight: 800; }
+    .card-title-sub { font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 400; }
+
+    /* ── Form elements ── */
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 5px;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--text);
+      background: #fafafa;
+      transition: border-color .15s;
+      outline: none;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--orange); background: #fff; }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+    /* ── Slide actions ── */
+    .slide-actions { display: flex; gap: 6px; }
+
+    /* ── Age tab editor ── */
+    .age-editor-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .age-editor-tab {
+      padding: 7px 18px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #fff;
+      color: var(--muted);
+      transition: all .15s;
+    }
+    .age-editor-tab.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .age-editor-panel { display: none; }
+    .age-editor-panel.active { display: block; }
+
+    /* ── News list ── */
+    .news-list { display: flex; flex-direction: column; gap: 10px; }
+    .news-row {
+      display: grid;
+      grid-template-columns: 56px 50px 1fr 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fafafa;
+    }
+    .news-row img { width: 56px; height: 44px; object-fit: cover; border-radius: 6px; }
+    .news-cat-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #e0f3ff;
+      color: var(--blue);
+      white-space: nowrap;
+    }
+
+    /* ── Contact info ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* ── Stats row ── */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
       display: flex;
       align-items: center;
       gap: 14px;
-      text-decoration: none;
     }
-    .logo-img {
-      width: 90px;
-      height: 90px;
-      object-fit: contain;
-      border-radius: 50%;
-      background: #FFFBE8;
-      padding: 4px;
-      box-shadow: 0 4px 16px rgba(248,101,6,0.22);
-      transition: transform .25s;
-    }
-    .logo:hover .logo-img { transform: scale(1.06); }
-    .logo-text { line-height: 1.25; white-space: nowrap; }
-    .logo-text strong {
-      display: block;
-      font-size: 22px;
-      color: var(--red);
-      font-weight: 900;
-      letter-spacing: -0.3px;
-    }
-    .logo-text span {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.1px;
-    }
-
-    nav { display: flex; align-items: center; gap: 2px; }
-    nav a {
-      padding: 8px 12px;
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #333;
-      border-radius: 8px;
-      transition: color .2s, background .2s;
-      white-space: nowrap;
-    }
-    nav a:hover, nav a.active { color: var(--red); background: rgba(248,101,6,.07); }
-    .nav-cta {
-      background: var(--red) !important;
-      color: #fff !important;
-      border-radius: 24px !important;
-      padding: 10px 22px !important;
-    }
-    .nav-cta:hover { background: var(--red-dark) !important; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--red); border-radius: 2px; }
-
-    /* ══════════════════════════
-       HERO SLIDER
-    ══════════════════════════ */
-    #hero {
-      position: relative;
-      overflow: hidden;
-      height: 540px;
-    }
-    .slides { display: flex; height: 100%; transition: transform .6s ease; }
-    .slide {
-      min-width: 100%;
-      height: 100%;
-      position: relative;
-      background: #111;
-    }
-    .slide-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: .75;
-    }
-    .slide-caption {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,.65));
-      padding: 40px 48px 32px;
-      color: #fff;
-    }
-    .slide-caption h2 { font-size: clamp(18px,2.5vw,28px); font-weight: 800; margin-bottom: 6px; }
-    .slide-caption p { font-size: 14px; opacity: .9; }
-
-    .hero-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,.8);
-      border: none;
+    .stat-icon {
       width: 44px; height: 44px;
-      border-radius: 50%;
-      font-size: 18px;
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: background .2s;
-      z-index: 5;
+      font-size: 20px;
+      flex-shrink: 0;
     }
-    .hero-btn:hover { background: #fff; }
-    .hero-btn.prev { left: 16px; }
-    .hero-btn.next { right: 16px; }
-    .hero-dots {
-      position: absolute;
-      bottom: 12px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 8px; z-index: 5;
-    }
-    .dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: rgba(255,255,255,.5); cursor: pointer; transition: background .2s;
-    }
-    .dot.active { background: #fff; }
+    .stat-info .stat-val { font-size: 22px; font-weight: 900; line-height: 1; }
+    .stat-info .stat-label { font-size: 12px; color: var(--muted); margin-top: 3px; }
 
-    /* ══════════════════════════
-       PHUONG PHAP DAY HOC
-    ══════════════════════════ */
-    #phuong-phap { background: #fff; }
-    .methods-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 28px;
-    }
-    .method-card {
-      border-radius: 16px;
-      overflow: hidden;
-      border: 2px solid #e8e8e8;
-      transition: transform .25s, box-shadow .25s;
-    }
-    .method-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.12); }
-    .method-thumb {
-      width: 100%; height: 180px; object-fit: cover;
-    }
-    .method-thumb-placeholder {
-      width: 100%; height: 180px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 40px;
-      background: linear-gradient(135deg, #fff8f0, #ffecd6);
-    }
-    .method-body { padding: 16px; text-align: center; }
-    .method-body h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
-    .method-body h3.red { color: var(--red); }
-    .method-body h3.green { color: var(--green); }
-    .method-body h3.teal { color: var(--teal); }
-    .method-body h3.orange { color: var(--orange); }
-    .method-body p { font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.6; }
-
-    /* ══════════════════════════
-       HOAT DONG CUA BE
-    ══════════════════════════ */
-    #hoat-dong { background: var(--red); }
-    #hoat-dong .section-title { color: #fff; }
-    #hoat-dong .section-subtitle { color: rgba(255,255,255,.85); }
-
-    .age-tabs { display: flex; gap: 12px; justify-content: center; margin-bottom: 32px; }
-    .age-tab {
-      padding: 10px 28px;
-      border: 2px solid #fff;
-      border-radius: 30px;
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      background: #1f2937;
       color: #fff;
-      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 10px;
       font-size: 14px;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .age-tab.active, .age-tab:hover { background: #fff; color: var(--red); }
-
-    .age-panel { display: none; }
-    .age-panel.active { display: block; }
-
-    .panel-inner {
-      background: #fff;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-    .panel-img-wrap { position: relative; height: 280px; }
-    .panel-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .age-badge {
-      position: absolute; top: 20px; left: 20px;
-      background: var(--green); color: #fff;
-      padding: 8px 22px; border-radius: 30px;
-      font-weight: 800; font-size: 15px;
-    }
-    .panel-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-    .panel-col { padding: 32px; }
-    .panel-col:first-child { border-right: 1px solid #eee; }
-    .panel-col h4 {
-      font-size: 16px; font-weight: 800; color: var(--red);
-      margin-bottom: 16px; padding-bottom: 8px;
-      border-bottom: 2px solid #fce;
-    }
-    .panel-col ul li {
-      padding: 7px 0;
-      font-size: 14px;
-      color: #444;
-      display: flex; align-items: flex-start; gap: 8px;
-    }
-    .panel-col ul li::before {
-      content: '●'; color: var(--red); font-size: 8px; margin-top: 5px; flex-shrink: 0;
-    }
-
-    /* ══════════════════════════
-       CO SO VAT CHAT
-    ══════════════════════════ */
-    #co-so { background: #fff; }
-    .facility-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      font-weight: 600;
+      display: flex;
       align-items: center;
+      gap: 8px;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all .3s;
+      z-index: 999;
     }
-    .facility-text h3 {
-      font-size: 22px; font-weight: 800; color: #222;
-      margin: 16px 0 14px;
-      line-height: 1.4;
-    }
-    .facility-icon { font-size: 40px; }
-    .facility-text p { color: var(--muted); line-height: 1.8; font-size: 15px; }
-    .facility-slider { position: relative; border-radius: 20px; overflow: hidden; }
-    .fslides { display: flex; transition: transform .5s ease; }
-    .fslide { min-width: 100%; }
-    .fslide img { width: 100%; height: 340px; object-fit: cover; }
-    .fslide-placeholder {
-      width: 100%; height: 340px;
-      background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 60px;
-    }
-    .fdots {
-      display: flex; gap: 8px; justify-content: center; margin-top: 14px;
-    }
-    .fdot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: #ccc; cursor: pointer; transition: background .2s;
-    }
-    .fdot.active { background: var(--red); }
+    .toast.show { transform: translateY(0); opacity: 1; }
 
-    /* Reverse row */
-    .facility-grid.reverse { direction: rtl; }
-    .facility-grid.reverse > * { direction: ltr; }
-
-    /* ══════════════════════════
-       TIN TUC - SU KIEN
-    ══════════════════════════ */
-    #tin-tuc { background: var(--gray); }
-    #tin-tuc .section-title { color: var(--teal); }
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-    }
-    .news-card {
-      background: #fff;
-      border-radius: 16px;
-      overflow: hidden;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .news-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,.1); }
-    .news-thumb { width: 100%; height: 200px; object-fit: cover; }
-    .news-thumb-placeholder {
-      width: 100%; height: 200px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 50px;
-      background: linear-gradient(135deg, #e0f4ff, #b8e4ff);
-    }
-    .news-body { padding: 20px; }
-    .news-cat {
-      font-size: 11px; font-weight: 700; color: var(--teal);
-      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
-    }
-    .news-body h3 {
-      font-size: 15px; font-weight: 800; color: #222;
-      margin-bottom: 10px; line-height: 1.5;
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    thead th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      background: #f9fafb;
+      border-bottom: 1px solid var(--border);
     }
-    .news-body p { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
-    .news-read {
-      font-size: 13px; font-weight: 700; color: var(--green);
-      display: flex; align-items: center; gap: 4px;
-    }
-    .news-read:hover { color: var(--teal); }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 10px 14px; vertical-align: middle; }
+    tbody tr:hover { background: #f9fafb; }
 
-    /* ══════════════════════════
-       CHIA SE PHU HUYNH
-    ══════════════════════════ */
-    #phu-huynh { background: #fff; }
-    #phu-huynh .section-title { color: var(--teal); }
-    .parents-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-    }
-    .parent-card { position: relative; border-radius: 16px; overflow: hidden; }
-    .parent-card img { width: 100%; height: 380px; object-fit: cover; display: block; }
-    .parent-card-placeholder {
-      width: 100%; height: 380px;
-      background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 60px;
-    }
-    .parent-overlay {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,.55));
-      padding: 32px 20px 20px;
-      color: #fff;
-    }
-    .parent-role { font-size: 12px; opacity: .85; margin-bottom: 4px; }
-    .parent-name { font-size: 18px; font-weight: 800; }
-    .parent-arrow {
-      position: absolute; bottom: 20px; right: 20px;
-      color: #fff; font-size: 22px; opacity: .8;
-    }
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
-    /* ══════════════════════════
-       LIEN HE / DANG KY
-    ══════════════════════════ */
-    #lien-he {
-      position: relative;
-      min-height: 580px;
-      display: flex; align-items: center;
-      overflow: hidden;
+    /* ── Badge ── */
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
     }
-    .lh-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background: linear-gradient(135deg, #34A469 0%, #237a4a 100%);
-    }
-    .lh-bg-img {
-      position: absolute; inset: 0; z-index: 0;
-      background: url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1400&q=80') center/cover;
-      opacity: .3;
-    }
-    .lh-inner {
-      position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 60px; align-items: center;
-      width: 100%; max-width: var(--max);
-      margin: 0 auto; padding: 60px 24px;
-    }
-    .lh-left h2 { font-size: clamp(28px,3vw,40px); font-weight: 900; color: #fff; margin-bottom: 16px; }
-    .lh-left p { color: rgba(255,255,255,.85); font-size: 15px; margin-bottom: 32px; }
-    .contact-item {
-      display: flex; align-items: center; gap: 12px;
-      background: rgba(255,255,255,.15);
-      border-radius: 40px; padding: 12px 22px;
-      margin-bottom: 14px; color: #fff; font-weight: 600;
-      backdrop-filter: blur(4px);
-    }
-    .contact-item .ci-icon { font-size: 20px; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-orange { background: #ffedd5; color: #ea580c; }
+    .badge-gray   { background: #f1f5f9; color: #64748b; }
 
-    /* Form */
-    .form-card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 36px 32px;
-      box-shadow: 0 24px 60px rgba(0,0,0,.15);
-    }
-    .form-card h3 {
-      font-size: 20px; font-weight: 800; color: var(--teal);
-      margin-bottom: 22px; text-align: center;
-    }
-    .form-group { margin-bottom: 14px; }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid #ddd;
-      border-radius: 10px;
-      font-size: 14px;
-      font-family: inherit;
-      color: #333;
-      transition: border-color .2s;
-      outline: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--teal); }
-    .form-group textarea { resize: vertical; min-height: 80px; }
-    .class-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-    .class-btn {
-      padding: 10px;
-      border: 1.5px solid #ddd;
-      border-radius: 10px;
-      font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: all .2s; background: #fff; font-family: inherit;
-    }
-    .class-btn.active, .class-btn:hover {
-      background: var(--green); color: #fff; border-color: var(--green);
-    }
-    .btn-submit {
-      width: 100%; padding: 15px;
-      background: var(--orange); color: #fff;
-      border: none; border-radius: 30px;
-      font-size: 16px; font-weight: 800;
-      cursor: pointer; transition: background .2s, transform .2s;
-      font-family: inherit; letter-spacing: .5px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .btn-submit:hover { background: #d45000; transform: translateY(-2px); }
 
-    /* Alert */
-    .alert {
-      display: none;
-      background: #e8f8ee; border: 1.5px solid #2e9e4f;
-      color: #1a6e30; border-radius: 10px;
-      padding: 12px 16px; font-size: 14px; font-weight: 600;
-      margin-bottom: 14px; text-align: center;
-    }
 
-    /* ══════════════════════════
-       FOOTER
-    ══════════════════════════ */
-    footer {
-      background: #1a1a2e; color: #aaa;
-      padding: 48px 0 24px;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 40px; margin-bottom: 40px;
-    }
-    .footer-brand .fw { color: var(--red); font-weight: 800; font-size: 18px; margin-bottom: 12px; }
-    .footer-brand p { font-size: 13.5px; line-height: 1.8; }
-    .footer-col h4 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
-    .footer-col ul li { margin-bottom: 9px; }
-    .footer-col ul li a { font-size: 13.5px; color: #aaa; transition: color .2s; }
-    .footer-col ul li a:hover { color: #fff; }
-    .footer-bottom {
-      border-top: 1px solid #333;
-      padding-top: 20px;
-      display: flex; align-items: center; justify-content: space-between;
+    /* ── Add row btn ── */
+    .add-row-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      background: none;
+      color: var(--muted);
       font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      justify-content: center;
+      transition: border-color .15s, color .15s;
+      margin-top: 10px;
     }
+    .add-row-btn:hover { border-color: var(--orange); color: var(--orange); }
 
-    /* ══════════════════════════
-       RESPONSIVE
-    ══════════════════════════ */
-    @media (max-width: 1024px) {
-      .methods-grid { grid-template-columns: repeat(2, 1fr); }
-      .facility-grid { grid-template-columns: 1fr; gap: 32px; }
-      .facility-grid.reverse { direction: ltr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 768px) {
-      #hero { height: 320px; }
-      nav { display: none; position: absolute; top: 100px; left: 0; right: 0;
-        background: #fff; flex-direction: column; padding: 16px; border-bottom: 2px solid var(--red);
-        box-shadow: 0 8px 20px rgba(0,0,0,.1); }
-      nav.open { display: flex; }
-      .hamburger { display: flex; }
-      .methods-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .news-grid, .parents-grid { grid-template-columns: 1fr; }
-      .panel-content { grid-template-columns: 1fr; }
-      .panel-col:first-child { border-right: none; border-bottom: 1px solid #eee; }
-      .lh-inner { grid-template-columns: 1fr; }
-      .age-tabs { flex-wrap: wrap; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-    }
-    @media (max-width: 480px) {
-      .methods-grid { grid-template-columns: 1fr; }
-      .class-btns { grid-template-columns: 1fr; }
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .sidebar { width: 200px; }
+      .main { margin-left: 200px; }
+      .stats-row { grid-template-columns: 1fr; }
+      .field-row, .field-row-3, .contact-grid { grid-template-columns: 1fr; }
+      .news-row { grid-template-columns: 48px 1fr auto; }
+      .news-row > :nth-child(2),
+      .news-row > :nth-child(4) { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════ HEADER ══════════════ -->
-<header id="header">
-  <div class="container header-inner">
-    <a href="#" class="logo">
-      <img class="logo-img" src="logo.png" alt="Logo Thế Hệ Mới Preschool" />
-      <div class="logo-text">
-        <strong>Thế Hệ Mới Preschool</strong>
-        <span>Ươm mầm tài năng – Kiến tạo tương lai</span>
-      </div>
-    </a>
-
-    <nav id="nav">
-      <a href="#hero" class="active">Trang Chủ</a>
-      <a href="#phuong-phap">Giới Thiệu</a>
-      <a href="#hoat-dong">Chương Trình Học</a>
-      <a href="#tin-tuc">Tin Tức &amp; Thông Báo</a>
-      <a href="#co-so">Thư Viện</a>
-      <a href="#phu-huynh">Tuyển Sinh</a>
-      <a href="#lien-he" class="nav-cta">Liên Hệ</a>
-    </nav>
-
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <img src="logo.png" alt="Logo" />
+    <span>Thế Hệ Mới<small>Preschool Admin</small></span>
   </div>
-</header>
 
-<!-- ══════════════ HERO SLIDER ══════════════ -->
-<section id="hero">
-  <div class="slides" id="heroSlides">
-    <!-- Slide 1 -->
-    <div class="slide">
-      <img class="slide-img"
-        src="slide1.png"
-        alt="KinderFit Programme" />
-      <div class="slide-caption">
-        <h2>Thế Hệ Mới preschool</h2>
-        <p>Nơi mỗi đứa trẻ được yêu thương, chăm sóc và phát triển toàn diện.</p>
-      </div>
+  <nav class="sidebar-menu">
+    <div class="menu-label">Tổng quan</div>
+    <div class="menu-item active" data-panel="dashboard">
+      <span class="menu-icon">🏠</span> Dashboard
     </div>
-    <!-- Slide 2 -->
-    <div class="slide">
-      <img class="slide-img"
-        src="slide2.png"
-        alt="Học sinh vui vẻ" />
-      <div class="slide-caption">
-        <h2>Môi Trường Học Tập Thân Thiện, Sáng Tạo</h2>
-        <p>Nơi mỗi đứa trẻ được yêu thương, chăm sóc và phát triển toàn diện.</p>
-      </div>
+
+    <div class="menu-label">Nội dung website</div>
+    <div class="menu-item" data-panel="activities">
+      <span class="menu-icon">🎨</span> Hoạt động của bé
     </div>
-    <!-- Slide 3 -->
-    <div class="slide">
-      <img class="slide-img"
-        src="slide3.png"
-        alt="Chương trình Cambridge" />
-      <div class="slide-caption">
-        <h2>Chương Trình Tiếng Anh Chuẩn Cambridge International</h2>
-        <p>Sự khởi đầu tốt đẹp nhất cho việc học tiếng Anh của trẻ từ 18 tháng tuổi.</p>
-      </div>
+
+    <div class="menu-label">Bài viết & truyền thông</div>
+    <div class="menu-item" data-panel="news">
+      <span class="menu-icon">📰</span> Tin tức – Sự kiện
+    </div>
+    <div class="menu-item" data-panel="parents">
+      <span class="menu-icon">👨‍👩‍👧</span> Chia sẻ phụ huynh
+    </div>
+
+    <div class="menu-label">Đăng ký & liên hệ</div>
+    <div class="menu-item" data-panel="registrations">
+      <span class="menu-icon">📋</span> Danh sách đăng ký
+    </div>
+    <div class="menu-item" data-panel="contact">
+      <span class="menu-icon">📍</span> Thông tin liên hệ
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">© 2026 Thế Hệ Mới Admin</div>
+</aside>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<div class="main">
+  <div class="topbar">
+    <h1 id="pageTitle">Dashboard</h1>
+    <div class="topbar-actions">
+      <a href="index.html" target="_blank" class="btn btn-outline">🌐 Xem website</a>
+      <button class="btn btn-primary" id="globalSave" onclick="showToast('✅ Đã lưu thành công!')">💾 Lưu thay đổi</button>
     </div>
   </div>
 
-  <button class="hero-btn prev" id="heroPrev">&#8249;</button>
-  <button class="hero-btn next" id="heroNext">&#8250;</button>
-  <div class="hero-dots" id="heroDots">
-    <div class="dot active" data-i="0"></div>
-    <div class="dot" data-i="1"></div>
-    <div class="dot" data-i="2"></div>
-  </div>Ngô Sĩ Liên, Đà Nẵng
-</section>
+  <div class="content">
 
-<!-- ══════════════ PHƯƠNG PHÁP DẠY HỌC ══════════════ -->
-<section class="section" id="phuong-phap">
-  <div class="container">
-    <h2 class="section-title" style="color: var(--red); font-size: clamp(26px,3vw,38px);">
-      Phương pháp dạy học
-    </h2>
-    <p class="section-subtitle">Kết hợp nhiều phương pháp tiên tiến, phù hợp với từng độ tuổi</p>
-
-    <div class="methods-grid">
-      <!-- FasTracKids -->
-      <div class="method-card">
-        <div class="method-thumb-placeholder">🚀</div>
-        <div class="method-body">
-          <h3 class="red">FasTracKids</h3>
-          <p>"Kiến thức ẩn giấu trong những niềm vui"</p>
-        </div>
-      </div>
-      <!-- Cambridge -->
-      <div class="method-card">
-        <div class="method-thumb-placeholder">🎓</div>
-        <div class="method-body">
-          <h3 class="green">Cambridge</h3>
-          <p>"Sự khởi đầu tốt đẹp nhất cho việc học tiếng Anh của trẻ"</p>
-        </div>
-      </div>
-      <!-- Montessori -->
-      <div class="method-card">
-        <div class="method-thumb-placeholder">🌱</div>
-        <div class="method-body">
-          <h3 class="teal">Montessori</h3>
-          <p>"Chiếc nôi ươm mầm những tài năng"</p>
-        </div>
-      </div>
-      <!-- STEAM -->
-      <div class="method-card">
-        <div class="method-thumb-placeholder">🔬</div>
-        <div class="method-body">
-          <h3 class="orange">Steam</h3>
-          <p>"Vui học – Sáng tạo"</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ HOẠT ĐỘNG CỦA BÉ ══════════════ -->
-<section class="section" id="hoat-dong">
-  <div class="container">
-    <h2 class="section-title">Hoạt động của bé tại trường</h2>
-    <p class="section-subtitle" style="color:rgba(255,255,255,.85);">
-      Các hoạt động, giờ giấc đa dạng, phù hợp với độ tuổi và bám sát theo sự phát triển toàn diện của trẻ.
-    </p>
-
-    <!-- Tabs -->
-    <div class="age-tabs">
-      <button class="age-tab active" data-tab="age23">2-3 tuổi</button>
-      <button class="age-tab" data-tab="age34">3-4 tuổi</button>
-      <button class="age-tab" data-tab="age45">4-5 tuổi</button>
-      <button class="age-tab" data-tab="age56">5-6 tuổi</button>
-    </div>
-
-    <!-- Panel 2-3 -->
-    <div class="age-panel active" id="age23">
-      <div class="panel-inner">
-        <div class="panel-img-wrap">
-          <img src="slide1.png" alt="Hoạt động 2-3 tuổi" />
-          <span class="age-badge">2-3 tuổi</span>
-        </div>
-        <div class="panel-content">
-          <div class="panel-col">
-            <h4>Hoạt động</h4>
-            <ul>
-              <li>Lễ giáo</li>
-              <li>Nhận biết tập nói</li>
-              <li>Nhận biết phân biệt</li>
-              <li>Trải nghiệm âm nhạc – Múa</li>
-              <li>Làm quen Văn học</li>
-              <li>Làm quen tiếng Anh</li>
-              <li>Thể dục – Chăm sóc sức khỏe</li>
-              <li>Tạo hình</li>
-            </ul>
+    <!-- ─── DASHBOARD ─── -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#e6f4ed;">📰</div>
+          <div class="stat-info">
+            <div class="stat-val" style="color:var(--green);">3</div>
+            <div class="stat-label">Bài tin tức</div>
           </div>
-          <div class="panel-col">
-            <h4>Thời gian biểu</h4>
-            <ul>
-              <li>6h30-8h15: Đón trẻ, thể dục, tắm nắng</li>
-              <li>8h15-10h00: Chơi – Tập</li>
-              <li>10h00-11h00: Vệ sinh – Ăn trưa</li>
-              <li>11h00-13h45: Ngủ trưa</li>
-              <li>13h45-14h15: Ăn phụ</li>
-              <li>14h15-15h45: Chơi – Tập</li>
-              <li>15h45-16h15: Ăn phụ</li>
-              <li>16h45-17h00: Chơi – Trả trẻ</li>
-            </ul>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#e0f3ff;">📋</div>
+          <div class="stat-info">
+            <div class="stat-val" style="color:var(--blue);">7</div>
+            <div class="stat-label">Đăng ký mới</div>
           </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fffbe0;">👨‍👩‍👧</div>
+          <div class="stat-info">
+            <div class="stat-val" style="color:#b08600;">3</div>
+            <div class="stat-label">Chia sẻ phụ huynh</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2>Đăng ký tư vấn gần đây</h2>
+            <div class="card-title-sub">Các phụ huynh vừa gửi form đăng ký</div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="switchPanel('registrations')">Xem tất cả</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Họ tên</th>
+                <th>Điện thoại</th>
+                <th>Email</th>
+                <th>Khối lớp</th>
+                <th>Trạng thái</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Nguyễn Thị Mai</strong></td>
+                <td>0912 345 678</td>
+                <td>mai@gmail.com</td>
+                <td>Panda 3 tuổi</td>
+                <td><span class="badge badge-green">Mới</span></td>
+                <td><button class="btn btn-outline btn-sm">Chi tiết</button></td>
+              </tr>
+              <tr>
+                <td><strong>Trần Văn Hùng</strong></td>
+                <td>0901 234 567</td>
+                <td>hung@gmail.com</td>
+                <td>Dolphin 4 tuổi</td>
+                <td><span class="badge badge-orange">Đang xử lý</span></td>
+                <td><button class="btn btn-outline btn-sm">Chi tiết</button></td>
+              </tr>
+              <tr>
+                <td><strong>Lê Thị Hoa</strong></td>
+                <td>0908 765 432</td>
+                <td>hoa@gmail.com</td>
+                <td>Koala 18–36 tháng</td>
+                <td><span class="badge badge-gray">Đã liên hệ</span></td>
+                <td><button class="btn btn-outline btn-sm">Chi tiết</button></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <!-- Panel 3-4 -->
-    <div class="age-panel" id="age34">
-      <div class="panel-inner">
-        <div class="panel-img-wrap">
-          <img src="slide3.png" alt="Hoạt động 2-3 tuổi" />
-          <span class="age-badge">3-4 tuổi</span>
-        </div>
-        <div class="panel-content">
-          <div class="panel-col">
-            <h4>Hoạt động</h4>
-            <ul>
-              <li>Toán – Tư duy Logic</li>
-              <li>Tiếng Việt – Làm quen chữ viết</li>
-              <li>Tiếng Anh Cambridge</li>
-              <li>Âm nhạc – Vũ đạo</li>
-              <li>Vẽ – Tô màu – Nặn đất</li>
-              <li>Kỹ năng sống cơ bản</li>
-              <li>Thể dục – Vận động</li>
-            </ul>
-          </div>
-          <div class="panel-col">
-            <h4>Thời gian biểu</h4>
-            <ul>
-              <li>7h00-8h15: Đón trẻ, thể dục sáng</li>
-              <li>8h15-10h30: Học tập – Vui chơi</li>
-              <li>10h30-11h00: Vệ sinh – Chuẩn bị ăn trưa</li>
-              <li>11h00-14h00: Ăn trưa – Nghỉ ngơi</li>
-              <li>14h00-14h30: Ăn phụ</li>
-              <li>14h30-16h30: Hoạt động chiều</li>
-              <li>16h30-17h00: Trả trẻ</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Panel 4-5 -->
-    <div class="age-panel" id="age45">
-      <div class="panel-inner">
-        <div class="panel-img-wrap">
-          <img src="slide3.png" alt="Hoạt động 2-3 tuổi" />
-          <span class="age-badge">4-5 tuổi</span>
-        </div>
-        <div class="panel-content">
-          <div class="panel-col">
-            <h4>Hoạt động</h4>
-            <ul>
-              <li>Toán tư duy nâng cao</li>
-              <li>Chữ viết – Tiền đọc viết</li>
-              <li>STEAM – Khoa học vui</li>
-              <li>Tiếng Anh Cambridge A1</li>
-              <li>Hội họa – Mỹ thuật</li>
-              <li>Yoga thiếu nhi</li>
-              <li>Kỹ năng xã hội</li>
-            </ul>
-          </div>
-          <div class="panel-col">
-            <h4>Thời gian biểu</h4>
-            <ul>
-              <li>7h00-8h00: Đón trẻ</li>
-              <li>8h00-11h00: Học tập chính khóa</li>
-              <li>11h00-11h30: Vệ sinh – Ăn trưa</li>
-              <li>11h30-14h00: Nghỉ ngơi</li>
-              <li>14h00-14h30: Ăn phụ</li>
-              <li>14h30-16h30: Hoạt động ngoại khóa</li>
-              <li>16h30-17h00: Trả trẻ</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Panel 5-6 -->
-    <div class="age-panel" id="age56">
-      <div class="panel-inner">
-        <div class="panel-img-wrap">
-          <img src="slide2.png" alt="Hoạt động 2-3 tuổi" />
-          <span class="age-badge">5-6 tuổi</span>
-        </div>
-        <div class="panel-content">
-          <div class="panel-col">
-            <h4>Hoạt động</h4>
-            <ul>
-              <li>Chuẩn bị vào lớp 1</li>
-              <li>Đọc viết nâng cao</li>
-              <li>Toán – Lập trình Scratch Jr</li>
-              <li>Tiếng Anh Cambridge Starters</li>
-              <li>Robotics – STEM</li>
-              <li>Thể dục thể thao</li>
-              <li>Kỹ năng lãnh đạo nhí</li>
-            </ul>
-          </div>
-          <div class="panel-col">
-            <h4>Thời gian biểu</h4>
-            <ul>
-              <li>7h00-7h45: Đón trẻ – Thể dục</li>
-              <li>7h45-11h30: Học chính khóa</li>
-              <li>11h30-12h00: Ăn trưa</li>
-              <li>12h00-14h00: Nghỉ trưa</li>
-              <li>14h00-14h30: Ăn phụ chiều</li>
-              <li>14h30-17h00: Hoạt động chuyên đề</li>
-              <li>17h00: Trả trẻ</li>
-            </ul>
+    <!-- ─── HOẠT ĐỘNG CỦA BÉ ─── -->
+    <div class="panel" id="panel-activities">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2>🎨 Hoạt động của bé</h2>
+            <div class="card-title-sub">Chỉnh sửa hoạt động và thời gian biểu theo từng độ tuổi</div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+        <div class="age-editor-tabs">
+          <button class="age-editor-tab active" data-age="23">2–3 tuổi</button>
+          <button class="age-editor-tab" data-age="34">3–4 tuổi</button>
+          <button class="age-editor-tab" data-age="45">4–5 tuổi</button>
+          <button class="age-editor-tab" data-age="56">5–6 tuổi</button>
+        </div>
 
-<!-- ══════════════ CƠ SỞ VẬT CHẤT ══════════════ -->
-<section class="section" id="co-so">
-    <h2 class="section-title" style="color: var(--red); font-size: clamp(26px,3vw,38px);">
-      Cơ sở vật chất
-    </h2>
-  <div class="container">
-    <!-- Block 1 -->
-    <div class="facility-grid">
-      <div class="facility-text">
-        <div class="facility-icon">🖥️</div>
-        <h3>Hệ thống trang thiết bị học tập chuẩn Quốc tế</h3>
-        <p>
-          Nằm trong quy hoạch của khu đô thị Quốc tế Ciputra với diện tích trên 26.000 m²,
-          Hanoi Academy có hệ thống cơ sở vật chất khang trang, sạch đẹp, an toàn và hiện đại
-          gồm các phòng học tiện nghi và các phòng chức năng (nhà biểu diễn, nhà thể chất, sân
-          thể thao ngoài trời, bể bơi studio nghệ thuật, phòng nấu ăn, các phòng hội họa, âm
-          nhạc theo bộ môn, v.v) đầy đủ, đảm bảo môi trường học tập, rèn luyện tích cực theo
-          định hướng Quốc tế.
-        </p>
-      </div>
-      <div>
-        <div class="facility-slider" id="fs1">
-          <div class="fslides" id="fslides1">
-            <div class="fslide">
-              <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80" alt="Cơ sở 1" />
+        <div class="age-editor-panel active" id="age-panel-23">
+          <div class="field-row">
+            <div class="field">
+              <label>Hoạt động (mỗi dòng 1 mục)</label>
+              <textarea rows="9">Lễ giáo
+Nhận biết tập nói
+Nhận biết phân biệt
+Trải nghiệm âm nhạc – Múa
+Làm quen Văn học
+Làm quen tiếng Anh
+Thể dục – Chăm sóc sức khỏe
+Tạo hình</textarea>
             </div>
-            <div class="fslide">
-              <img src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=800&q=80" alt="Cơ sở 2" />
+            <div class="field">
+              <label>Thời gian biểu (mỗi dòng 1 mục)</label>
+              <textarea rows="9">6h30-8h15: Đón trẻ, thể dục, tắm nắng
+8h15-10h00: Chơi – Tập
+10h00-11h00: Vệ sinh – Ăn trưa
+11h00-13h45: Ngủ trưa
+13h45-14h15: Ăn phụ
+14h15-15h45: Chơi – Tập
+15h45-16h15: Ăn phụ
+16h45-17h00: Chơi – Trả trẻ</textarea>
             </div>
           </div>
         </div>
-        <div class="fdots" id="fdots1">
-          <div class="fdot active" data-slider="1" data-i="0"></div>
-          <div class="fdot" data-slider="1" data-i="1"></div>
-        </div>
-      </div>
-    </div>
 
-    <div style="margin: 60px 0; border-top: 1px solid #eee;"></div>
-
-    <!-- Block 2 -->
-    <div class="facility-grid reverse">
-      <div>
-        <div class="facility-slider" id="fs2">
-          <div class="fslides" id="fslides2">
-            <div class="fslide">
-              <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=800&q=80" alt="Thiên nhiên 1" />
+        <div class="age-editor-panel" id="age-panel-34">
+          <div class="field-row">
+            <div class="field">
+              <label>Hoạt động</label>
+              <textarea rows="8">Toán – Tư duy Logic
+Tiếng Việt – Làm quen chữ viết
+Tiếng Anh Cambridge
+Âm nhạc – Vũ đạo
+Vẽ – Tô màu – Nặn đất
+Kỹ năng sống cơ bản
+Thể dục – Vận động</textarea>
             </div>
-            <div class="fslide">
-              <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=800&q=80" alt="Thiên nhiên 2" />
+            <div class="field">
+              <label>Thời gian biểu</label>
+              <textarea rows="8">7h00-8h15: Đón trẻ, thể dục sáng
+8h15-10h30: Học tập – Vui chơi
+10h30-11h00: Vệ sinh – Chuẩn bị ăn trưa
+11h00-14h00: Ăn trưa – Nghỉ ngơi
+14h00-14h30: Ăn phụ
+14h30-16h30: Hoạt động chiều
+16h30-17h00: Trả trẻ</textarea>
             </div>
           </div>
         </div>
-        <div class="fdots" id="fdots2">
-          <div class="fdot active" data-slider="2" data-i="0"></div>
-          <div class="fdot" data-slider="2" data-i="1"></div>
-        </div>
-      </div>
-      <div class="facility-text">
-        <div class="facility-icon">🌳</div>
-        <h3>Ngôi trường đẹp, thân thiện với thiên nhiên bậc nhất Hà Nội</h3>
-        <p>
-          Không gian học tập, sinh hoạt và vui chơi lành mạnh, hấp dẫn mà Hanoi Academy mang
-          tới cho học sinh chắc chắn là một trong những điểm nhấn quan trọng khiến nhiều phụ
-          huynh tin tưởng gửi gắm con em mình theo học tại trường.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ══════════════ TIN TỨC - SỰ KIỆN ══════════════ -->
-<section class="section" id="tin-tuc">
-  <div class="container">
-    <h2 class="section-title">Tin Tức – Sự Kiện</h2>
-    <p class="section-subtitle">Cập nhật những tin tức mới nhất từ nhà trường</p>
-    <div class="news-grid">
-      <!-- Card 1 -->
-      <div class="news-card">
-        <img class="news-thumb"
-          src="slide1.png"
-          alt="Tin 1" />
-        <div class="news-body">
-          <div class="news-cat">Chương trình</div>
-          <h3>Kindy City Chuẩn Bị Nền Tảng Tiếng Anh Chuẩn Pre-A1 Starters</h3>
-          <p>Chương trình học tập song ngữ tại Kindy City, kết hợp Creative Curriculum và chương trình mầm non của Bộ Giáo dục và Đào tạo mang lại nhiều lợi ích.</p>
-          <a href="#" class="news-read">Đọc thêm &#8250;</a>
+        <div class="age-editor-panel" id="age-panel-45">
+          <div class="field-row">
+            <div class="field">
+              <label>Hoạt động</label>
+              <textarea rows="8">Toán tư duy nâng cao
+Chữ viết – Tiền đọc viết
+STEAM – Khoa học vui
+Tiếng Anh Cambridge A1
+Hội họa – Mỹ thuật
+Yoga thiếu nhi
+Kỹ năng xã hội</textarea>
+            </div>
+            <div class="field">
+              <label>Thời gian biểu</label>
+              <textarea rows="8">7h00-8h00: Đón trẻ
+8h00-11h00: Học tập chính khóa
+11h00-11h30: Vệ sinh – Ăn trưa
+11h30-14h00: Nghỉ ngơi
+14h00-14h30: Ăn phụ
+14h30-16h30: Hoạt động ngoại khóa
+16h30-17h00: Trả trẻ</textarea>
+            </div>
+          </div>
         </div>
-      </div>
-      <!-- Card 2 -->
-      <div class="news-card">
-        <img class="news-thumb"
-          src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80"
-          alt="Tin 2" />
-        <div class="news-body">
-          <div class="news-cat">Sự kiện</div>
-          <h3>Cho Con Món Quà Đầu Năm Ý Nghĩa</h3>
-          <p>Vân Trang – người mẹ tin yêu Kindy City, đã lựa chọn gửi gắm cả 3 con của mình tại ngôi trường Thành phố Tuổi thơ cơ sở Him Lam.</p>
-          <a href="#" class="news-read">Đọc thêm &#8250;</a>
-        </div>
-      </div>
-      <!-- Card 3 -->
-      <div class="news-card">
-        <img class="news-thumb"
-          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
-          alt="Tin 3" />
-        <div class="news-body">
-          <div class="news-cat">Sự kiện</div>
-          <h3>Steam Day – Hành Trình Khoa Học Qua 11 Cơ Sở Kindy City</h3>
-          <p>"STEAM DAY – Exploring the World of Simple Machines" đã ghé thăm tất cả các cơ sở Kindy City, mang theo niềm vui khám phá khoa học đến từng khối.</p>
-          <a href="#" class="news-read">Đọc thêm &#8250;</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ══════════════ CHIA SẺ PHỤ HUYNH ══════════════ -->
-<section class="section" id="phu-huynh">
-  <div class="container">
-    <h2 class="section-title">Chia Sẻ Phụ Huynh</h2>
-    <p class="section-subtitle">Những chia sẻ chân thực từ các bậc phụ huynh tin tưởng gửi gắm con</p>
-    <div class="parents-grid">
-      <!-- Parent 1 -->
-      <div class="parent-card">
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80" alt="Phụ huynh 1" />
-        <div class="parent-overlay">
-          <div class="parent-role">Phụ huynh của học sinh Tâm Đan</div>
-          <div class="parent-name">Diễn viên Vân Trang</div>
+        <div class="age-editor-panel" id="age-panel-56">
+          <div class="field-row">
+            <div class="field">
+              <label>Hoạt động</label>
+              <textarea rows="8">Chuẩn bị vào lớp 1
+Đọc viết nâng cao
+Toán – Lập trình Scratch Jr
+Tiếng Anh Cambridge Starters
+Robotics – STEM
+Thể dục thể thao
+Kỹ năng lãnh đạo nhí</textarea>
+            </div>
+            <div class="field">
+              <label>Thời gian biểu</label>
+              <textarea rows="8">7h00-7h45: Đón trẻ – Thể dục
+7h45-11h30: Học chính khóa
+11h30-12h00: Ăn trưa
+12h00-14h00: Nghỉ trưa
+14h00-14h30: Ăn phụ chiều
+14h30-17h00: Hoạt động chuyên đề
+17h00: Trả trẻ</textarea>
+            </div>
+          </div>
         </div>
-        <div class="parent-arrow">→</div>
-      </div>
-      <!-- Parent 2 -->
-      <div class="parent-card">
-        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=80" alt="Phụ huynh 2" />
-        <div class="parent-overlay">
-          <div class="parent-role">Phụ huynh của học sinh Gia Khiêm</div>
-          <div class="parent-name">Diễn viên Lê Khiêm</div>
-        </div>
-        <div class="parent-arrow">→</div>
-      </div>
-      <!-- Parent 3 -->
-      <div class="parent-card">
-        <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=600&q=80" alt="Phụ huynh 3" />
-        <div class="parent-overlay">
-          <div class="parent-role">Phụ huynh của học sinh Linh Phi</div>
-          <div class="parent-name">Diễn viên Quang Tuấn</div>
-        </div>
-        <div class="parent-arrow">→</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ LIÊN HỆ / ĐĂNG KÝ ══════════════ -->
-<section id="lien-he">
-  <div class="lh-bg"></div>
-  <div class="lh-bg-img"></div>
-  <div class="lh-inner">
-    <div class="lh-left">
-      <h2>Liên Hệ</h2>
-      <p>Liên hệ với chúng tôi để được giải đáp các thắc mắc và tư vấn tuyển sinh:</p>
-      <div class="contact-item">
-        <span class="ci-icon">✉️</span>
-        <span>info@thehemoi.edu.vn</span>
-      </div>
-      <div class="contact-item">
-        <span class="ci-icon">📞</span>
-        <span>0123456789</span>
-      </div>
-      <div class="contact-item">
-        <span class="ci-icon">📍</span>
-        <span>Ngô Sĩ Liên, Đà Nẵng</span>
       </div>
     </div>
 
-    <div class="form-card">
-      <h3>Đăng Ký Tư Vấn</h3>
-      <div class="alert" id="formAlert">✅ Đăng ký thành công! Chúng tôi sẽ liên hệ sớm nhất.</div>
-      <form id="contactForm" novalidate>
-        <div class="form-group">
-          <input type="text" id="parentName" placeholder="Tên Phụ Huynh" required />
+    <!-- ─── TIN TỨC ─── -->
+    <div class="panel" id="panel-news">
+      <div class="card">
+        <div class="card-header">
+          <div><h2>📰 Tin tức – Sự kiện</h2><div class="card-title-sub">Quản lý bài viết hiển thị trên trang chủ</div></div>
+          <button class="btn btn-green btn-sm" onclick="addNews()">+ Thêm bài</button>
         </div>
-        <div class="form-group">
-          <input type="email" id="parentEmail" placeholder="example@email.com" required />
+        <div class="news-list" id="newsList">
+          <div class="news-row">
+            <img src="slide1.png" alt="" onerror="this.style.background='#e5e7eb';this.src=''" />
+            <span class="news-cat-badge">Chương trình</span>
+            <div class="field" style="margin:0;"><label class="label-locked">Tiêu đề</label><input type="text" value="Kindy City Chuẩn Bị Nền Tảng Tiếng Anh Chuẩn Pre-A1 Starters" readonly /></div>
+            <div class="field" style="margin:0;"><label>Mô tả ngắn</label><input type="text" value="Chương trình học tập song ngữ, kết hợp Creative Curriculum..." /></div>
+            <div class="slide-actions">
+              <button class="btn btn-outline btn-sm">✏️</button>
+              <button class="btn btn-danger btn-sm" onclick="this.closest('.news-row').remove()">🗑️</button>
+            </div>
+          </div>
+          <div class="news-row">
+            <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=120&q=80" alt="" />
+            <span class="news-cat-badge">Sự kiện</span>
+            <div class="field" style="margin:0;"><label class="label-locked">Tiêu đề</label><input type="text" value="Cho Con Món Quà Đầu Năm Ý Nghĩa" readonly /></div>
+            <div class="field" style="margin:0;"><label>Mô tả ngắn</label><input type="text" value="Vân Trang – người mẹ tin yêu, đã lựa chọn gửi gắm cả 3 con..." /></div>
+            <div class="slide-actions">
+              <button class="btn btn-outline btn-sm">✏️</button>
+              <button class="btn btn-danger btn-sm" onclick="this.closest('.news-row').remove()">🗑️</button>
+            </div>
+          </div>
+          <div class="news-row">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80" alt="" />
+            <span class="news-cat-badge">Sự kiện</span>
+            <div class="field" style="margin:0;"><label class="label-locked">Tiêu đề</label><input type="text" value="Steam Day – Hành Trình Khoa Học Qua 11 Cơ Sở" readonly /></div>
+            <div class="field" style="margin:0;"><label>Mô tả ngắn</label><input type="text" value="STEAM DAY – Exploring the World of Simple Machines..." /></div>
+            <div class="slide-actions">
+              <button class="btn btn-outline btn-sm">✏️</button>
+              <button class="btn btn-danger btn-sm" onclick="this.closest('.news-row').remove()">🗑️</button>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <input type="tel" id="parentPhone" placeholder="0123-456-789" required />
-        </div>
-        <div class="form-group">
-          <select id="branch">
-            <option value="">Chọn cơ sở quan tâm</option>
-            <option>Cơ sở Him Lam – Quận 7</option>
-            <option>Cơ sở Phú Mỹ Hưng – Quận 7</option>
-            <option>Cơ sở Vinhomes – Quận 9</option>
-            <option>Cơ sở Ciputra – Tây Hồ, Hà Nội</option>
-          </select>
-        </div>
-        <div class="class-btns">
-          <button type="button" class="class-btn active" data-class="koala">Koala 18 – 36 tháng</button>
-          <button type="button" class="class-btn" data-class="panda">Panda 3 tuổi</button>
-          <button type="button" class="class-btn" data-class="dolphin">Dolphin 4 tuổi</button>
-          <button type="button" class="class-btn" data-class="giraffe">Giraffe 5 tuổi</button>
-        </div>
-        <div class="form-group">
-          <textarea id="message" placeholder="Nội Dung"></textarea>
-        </div>
-        <button type="submit" class="btn-submit">Đăng Ký ✈</button>
-      </form>
+        <button class="add-row-btn" onclick="addNews()">+ Thêm bài viết mới</button>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- ══════════════ FOOTER ══════════════ -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="fw">🏫 Thế Hệ Mới School</div>
-        <p>Trường mầm non chất lượng cao với hơn 20 năm kinh nghiệm đào tạo, tin tưởng của hàng ngàn gia đình trên cả nước.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Liên kết nhanh</h4>
-        <ul>
-          <li><a href="#hero">Trang Chủ</a></li>
-          <li><a href="#phuong-phap">Giới Thiệu</a></li>
-          <li><a href="#hoat-dong">Chương Trình Học</a></li>
-          <li><a href="#tin-tuc">Tin Tức</a></li>
-          <li><a href="#lien-he">Liên Hệ</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Phương pháp</h4>
-        <ul>
-          <li><a href="#">FasTracKids</a></li>
-          <li><a href="#">Cambridge</a></li>
-          <li><a href="#">Montessori</a></li>
-          <li><a href="#">STEAM</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Liên hệ</h4>
-        <ul>
-          <li><a href="mailto:info@thehemoi.edu.vn">info@thehemoi.edu.vn</a></li>
-          <li><a href="tel:0901853353">0123456789</a></li>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">YouTube</a></li>
-        </ul>
+    <!-- ─── CHIA SẺ PHỤ HUYNH ─── -->
+    <div class="panel" id="panel-parents">
+      <div class="card">
+        <div class="card-header">
+          <div><h2>👨‍👩‍👧 Chia sẻ phụ huynh</h2><div class="card-title-sub">Quản lý testimonials hiển thị trên trang chủ</div></div>
+          <button class="btn btn-green btn-sm" onclick="addParent()">+ Thêm</button>
+        </div>
+        <div class="table-wrap">
+          <table id="parentsTable">
+            <thead><tr><th>Ảnh URL</th><th>Tên phụ huynh</th><th>Vai trò / Ghi chú</th><th></th></tr></thead>
+            <tbody>
+              <tr>
+                <td><input type="text" value="https://images.unsplash.com/photo-1544005313...w=600" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><input type="text" value="Diễn viên Vân Trang" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><input type="text" value="Phụ huynh của học sinh Tâm Đan" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><button class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">🗑️</button></td>
+              </tr>
+              <tr>
+                <td><input type="text" value="https://images.unsplash.com/photo-1472099645785...w=600" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><input type="text" value="Diễn viên Lê Khiêm" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><input type="text" value="Phụ huynh của học sinh Gia Khiêm" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><button class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">🗑️</button></td>
+              </tr>
+              <tr>
+                <td><input type="text" value="https://images.unsplash.com/photo-1489424731084...w=600" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><input type="text" value="Diễn viên Quang Tuấn" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><input type="text" value="Phụ huynh của học sinh Linh Phi" style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;" /></td>
+                <td><button class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">🗑️</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" onclick="addParent()">+ Thêm phụ huynh mới</button>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Trường Mầm Non Thế Hệ Mới. All rights reserved.</span>
-      <span>Chất lượng – Uy tín – Yêu thương</span>
-    </div>
-  </div>
-</footer>
 
-<!-- ══════════════ SCRIPTS ══════════════ -->
+    <!-- ─── DANH SÁCH ĐĂNG KÝ ─── -->
+    <div class="panel" id="panel-registrations">
+      <div class="card">
+        <div class="card-header">
+          <div><h2>📋 Danh sách đăng ký tư vấn</h2><div class="card-title-sub">Phụ huynh đã gửi form liên hệ</div></div>
+          <button class="btn btn-outline btn-sm">⬇️ Xuất Excel</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th><th>Họ tên</th><th>Điện thoại</th><th>Email</th>
+                <th>Khối lớp</th><th>Cơ sở</th><th>Ngày gửi</th><th>Trạng thái</th><th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td><td><strong>Nguyễn Thị Mai</strong></td><td>0912 345 678</td>
+                <td>mai@gmail.com</td><td>Panda 3 tuổi</td><td>Him Lam – Q7</td><td>30/03/2026</td>
+                <td><span class="badge badge-green">Mới</span></td>
+                <td>
+                  <select style="padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;">
+                    <option>Mới</option><option>Đang xử lý</option><option>Đã liên hệ</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td><td><strong>Trần Văn Hùng</strong></td><td>0901 234 567</td>
+                <td>hung@gmail.com</td><td>Dolphin 4 tuổi</td><td>Phú Mỹ Hưng – Q7</td><td>29/03/2026</td>
+                <td><span class="badge badge-orange">Đang xử lý</span></td>
+                <td>
+                  <select style="padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;">
+                    <option>Mới</option><option selected>Đang xử lý</option><option>Đã liên hệ</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td><td><strong>Lê Thị Hoa</strong></td><td>0908 765 432</td>
+                <td>hoa@gmail.com</td><td>Koala 18–36 tháng</td><td>Vinhomes – Q9</td><td>28/03/2026</td>
+                <td><span class="badge badge-gray">Đã liên hệ</span></td>
+                <td>
+                  <select style="padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;">
+                    <option>Mới</option><option>Đang xử lý</option><option selected>Đã liên hệ</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── THÔNG TIN LIÊN HỆ ─── -->
+    <div class="panel" id="panel-contact">
+      <div class="card">
+        <div class="card-header">
+          <div><h2>📍 Thông tin liên hệ</h2><div class="card-title-sub">Hiển thị tại section Liên Hệ của website</div></div>
+        </div>
+        <div class="contact-grid">
+          <div class="field">
+            <label>📧 Email</label>
+            <input type="email" value="info@thehemoi.edu.vn" />
+          </div>
+          <div class="field">
+            <label>📞 Số điện thoại</label>
+            <input type="tel" value="0123456789" />
+          </div>
+          <div class="field">
+            <label>📍 Địa chỉ</label>
+            <input type="text" value="Ngô Sĩ Liên, Đà Nẵng" />
+          </div>
+          <div class="field">
+            <label>🔗 Facebook</label>
+            <input type="url" placeholder="https://facebook.com/thehemoi" />
+          </div>
+          <div class="field">
+            <label>▶️ YouTube</label>
+            <input type="url" placeholder="https://youtube.com/@thehemoi" />
+          </div>
+          <div class="field">
+            <label>💬 Zalo</label>
+            <input type="text" placeholder="0123456789" />
+          </div>
+        </div>
+        <hr class="divider" />
+        <div class="field">
+          <label>Google Maps embed URL</label>
+          <input type="url" placeholder="https://www.google.com/maps/embed?pb=..." />
+        </div>
+        <hr class="divider" />
+        <p style="font-size:13px;font-weight:700;margin-bottom:12px;">Cơ sở trong form đăng ký</p>
+        <div id="branchList">
+          <div class="field-row" style="margin-bottom:8px;">
+            <input type="text" value="Cơ sở Him Lam – Quận 7" style="border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;" />
+            <button class="btn btn-danger btn-sm" onclick="this.closest('.field-row').remove()">🗑️</button>
+          </div>
+          <div class="field-row" style="margin-bottom:8px;">
+            <input type="text" value="Cơ sở Phú Mỹ Hưng – Quận 7" style="border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;" />
+            <button class="btn btn-danger btn-sm" onclick="this.closest('.field-row').remove()">🗑️</button>
+          </div>
+          <div class="field-row" style="margin-bottom:8px;">
+            <input type="text" value="Cơ sở Vinhomes – Quận 9" style="border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;" />
+            <button class="btn btn-danger btn-sm" onclick="this.closest('.field-row').remove()">🗑️</button>
+          </div>
+          <div class="field-row" style="margin-bottom:8px;">
+            <input type="text" value="Cơ sở Ciputra – Tây Hồ, Hà Nội" style="border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;" />
+            <button class="btn btn-danger btn-sm" onclick="this.closest('.field-row').remove()">🗑️</button>
+          </div>
+        </div>
+        <button class="add-row-btn" onclick="addBranch()">+ Thêm cơ sở</button>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
 <script>
-  /* --- Hamburger --- */
-  const hamburger = document.getElementById('hamburger');
-  const nav = document.getElementById('nav');
-  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
-  document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+  /* ── Navigation ── */
+  const menuItems = document.querySelectorAll('.menu-item');
+  const panels    = document.querySelectorAll('.panel');
+  const pageTitle = document.getElementById('pageTitle');
 
-  /* --- Hero Slider --- */
-  let heroIdx = 0;
-  const heroSlides = document.getElementById('heroSlides');
-  const heroDots = document.querySelectorAll('#heroDots .dot');
-  const totalHero = heroDots.length;
+  const titles = {
+    dashboard:     'Dashboard',
+    activities:    'Hoạt động của bé',
+    news:          'Tin tức – Sự kiện',
+    parents:       'Chia sẻ phụ huynh',
+    registrations: 'Danh sách đăng ký',
+    contact:       'Thông tin liên hệ',
+  };
 
-  function goHero(i) {
-    heroIdx = (i + totalHero) % totalHero;
-    heroSlides.style.transform = `translateX(-${heroIdx * 100}%)`;
-    heroDots.forEach((d, j) => d.classList.toggle('active', j === heroIdx));
+  function switchPanel(id) {
+    menuItems.forEach(m => m.classList.toggle('active', m.dataset.panel === id));
+    panels.forEach(p => p.classList.toggle('active', p.id === `panel-${id}`));
+    pageTitle.textContent = titles[id] || id;
   }
 
-  document.getElementById('heroPrev').addEventListener('click', () => goHero(heroIdx - 1));
-  document.getElementById('heroNext').addEventListener('click', () => goHero(heroIdx + 1));
-  heroDots.forEach(d => d.addEventListener('click', () => goHero(+d.dataset.i)));
-  setInterval(() => goHero(heroIdx + 1), 5000);
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => switchPanel(item.dataset.panel));
+  });
 
-  /* --- Age Tabs --- */
-  document.querySelectorAll('.age-tab').forEach(tab => {
+  /* ── Age tabs ── */
+  document.querySelectorAll('.age-editor-tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.age-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.age-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.age-editor-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.age-editor-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
+      document.getElementById(`age-panel-${tab.dataset.age}`).classList.add('active');
     });
   });
 
-  /* --- Facility Sliders --- */
-  function initFSlider(id) {
-    const track = document.getElementById(`fslides${id}`);
-    const dots = document.querySelectorAll(`#fdots${id} .fdot`);
-    let idx = 0;
-    dots.forEach(d => d.addEventListener('click', () => {
-      idx = +d.dataset.i;
-      track.style.transform = `translateX(-${idx * 100}%)`;
-      dots.forEach((dd, j) => dd.classList.toggle('active', j === idx));
-    }));
-    setInterval(() => {
-      idx = (idx + 1) % dots.length;
-      track.style.transform = `translateX(-${idx * 100}%)`;
-      dots.forEach((dd, j) => dd.classList.toggle('active', j === idx));
-    }, 4000);
+  /* ── Toast ── */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
   }
-  initFSlider(1);
-  initFSlider(2);
 
-  /* --- Class Buttons (form) --- */
-  document.querySelectorAll('.class-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.class-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
+  /* ── Add news ── */
+  function addNews() {
+    const row = document.createElement('div');
+    row.className = 'news-row';
+    row.innerHTML = `
+      <img src="" alt="" style="background:#e5e7eb;" />
+      <span class="news-cat-badge">Tin tức</span>
+      <div class="field" style="margin:0;"><label class="label-locked">Tiêu đề</label><input type="text" placeholder="Tiêu đề cố định" readonly /></div>
+      <div class="field" style="margin:0;"><label>Mô tả ngắn</label><input type="text" placeholder="Mô tả ngắn..." /></div>
+      <div class="slide-actions">
+        <button class="btn btn-outline btn-sm">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="this.closest('.news-row').remove()">🗑️</button>
+      </div>`;
+    document.getElementById('newsList').appendChild(row);
+  }
 
-  /* --- Contact Form --- */
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('parentName').value.trim();
-    const phone = document.getElementById('parentPhone').value.trim();
-    if (!name || !phone) {
-      alert('Vui lòng nhập họ tên và số điện thoại.');
-      return;
-    }
-    const alert = document.getElementById('formAlert');
-    alert.style.display = 'block';
-    this.reset();
-    document.querySelectorAll('.class-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
-    setTimeout(() => { alert.style.display = 'none'; }, 5000);
-  });
+  /* ── Add parent ── */
+  function addParent() {
+    const inp = 'style="width:100%;padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;"';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" placeholder="https://..." ${inp} /></td>
+      <td><input type="text" placeholder="Tên phụ huynh" ${inp} /></td>
+      <td><input type="text" placeholder="Vai trò / ghi chú" ${inp} /></td>
+      <td><button class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">🗑️</button></td>`;
+    document.querySelector('#parentsTable tbody').appendChild(tr);
+  }
 
-  /* --- Active nav on scroll --- */
-  const sections = document.querySelectorAll('section[id]');
-  window.addEventListener('scroll', () => {
-    const top = window.scrollY + 80;
-    sections.forEach(sec => {
-      const link = document.querySelector(`nav a[href="#${sec.id}"]`);
-      if (!link) return;
-      const active = top >= sec.offsetTop && top < sec.offsetTop + sec.offsetHeight;
-      link.classList.toggle('active', active);
-    });
-  });
+  /* ── Add branch ── */
+  function addBranch() {
+    const div = document.createElement('div');
+    div.className = 'field-row';
+    div.style.marginBottom = '8px';
+    div.innerHTML = `
+      <input type="text" placeholder="Tên cơ sở mới..." style="border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;" />
+      <button class="btn btn-danger btn-sm" onclick="this.closest('.field-row').remove()">🗑️</button>`;
+    document.getElementById('branchList').appendChild(div);
+  }
 </script>
 </body>
 </html>
