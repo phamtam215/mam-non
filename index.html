@@ -6,12 +6,12 @@
   <title>Trường Mầm Non Thế Hệ Mới – Chất Lượng Cao</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: "Be Vietnam Pro", sans-serif; color: #222; background: #fff; }
+    body { font-family: "Nunito", sans-serif; color: #222; background: #fff; }
     img { display: block; max-width: 100%; }
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
@@ -19,13 +19,13 @@
 
     /* ── Variables ── */
     :root {
-      --red:     #e02020;
-      --red-dark:#b81818;
-      --green:   #2e9e4f;
-      --teal:    #1a9d8e;
-      --orange:  #f06030;
-      --yellow:  #f5a623;
-      --gray:    #f5f5f5;
+      --red:     #F86506;
+      --red-dark:#d45000;
+      --green:   #34A469;
+      --teal:    #009EFF;
+      --orange:  #F86506;
+      --yellow:  #F8BA03;
+      --gray:    #FFFBE8;
       --text:    #333;
       --muted:   #777;
       --max:     1240px;
@@ -59,7 +59,7 @@
       font-size: 15px;
       transition: background .2s, transform .2s;
     }
-    .btn-primary:hover { background: #d04820; transform: translateY(-2px); }
+    .btn-primary:hover { background: #d45000; transform: translateY(-2px); }
     .btn-outline {
       display: inline-flex;
       align-items: center;
@@ -89,45 +89,56 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 70px;
+      height: 100px;
     }
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      text-decoration: none;
     }
-    .logo-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--red);
+    .logo-img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 22px;
-      font-weight: 900;
+      background: #FFFBE8;
+      padding: 4px;
+      box-shadow: 0 4px 16px rgba(248,101,6,0.22);
+      transition: transform .25s;
     }
-    .logo-text { line-height: 1.2; }
-    .logo-text strong { display: block; font-size: 16px; color: var(--red); font-weight: 800; }
-    .logo-text span { font-size: 11px; color: var(--muted); }
-
-    nav { display: flex; align-items: center; gap: 4px; }
-    nav a {
-      padding: 8px 14px;
-      font-size: 13.5px;
+    .logo:hover .logo-img { transform: scale(1.06); }
+    .logo-text { line-height: 1.25; white-space: nowrap; }
+    .logo-text strong {
+      display: block;
+      font-size: 22px;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: -0.3px;
+    }
+    .logo-text span {
+      font-size: 13px;
+      color: var(--muted);
       font-weight: 600;
+      letter-spacing: 0.1px;
+    }
+
+    nav { display: flex; align-items: center; gap: 2px; }
+    nav a {
+      padding: 8px 12px;
+      font-size: 14.5px;
+      font-weight: 700;
       color: #333;
-      border-radius: 6px;
+      border-radius: 8px;
       transition: color .2s, background .2s;
       white-space: nowrap;
     }
-    nav a:hover, nav a.active { color: var(--red); background: rgba(224,32,32,.06); }
+    nav a:hover, nav a.active { color: var(--red); background: rgba(248,101,6,.07); }
     .nav-cta {
       background: var(--red) !important;
       color: #fff !important;
-      border-radius: 20px !important;
-      padding: 8px 18px !important;
+      border-radius: 24px !important;
+      padding: 10px 22px !important;
     }
     .nav-cta:hover { background: var(--red-dark) !important; }
     .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
@@ -215,7 +226,7 @@
       width: 100%; height: 180px;
       display: flex; align-items: center; justify-content: center;
       font-size: 40px;
-      background: linear-gradient(135deg, #fff0f0, #ffe8e8);
+      background: linear-gradient(135deg, #fff8f0, #ffecd6);
     }
     .method-body { padding: 16px; text-align: center; }
     .method-body h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
@@ -345,7 +356,7 @@
       width: 100%; height: 200px;
       display: flex; align-items: center; justify-content: center;
       font-size: 50px;
-      background: linear-gradient(135deg, #e8f4f0, #d0ece6);
+      background: linear-gradient(135deg, #e0f4ff, #b8e4ff);
     }
     .news-body { padding: 20px; }
     .news-cat {
@@ -406,7 +417,7 @@
     }
     .lh-bg {
       position: absolute; inset: 0; z-index: 0;
-      background: linear-gradient(135deg, #1a9d8e 0%, #0d7a6c 100%);
+      background: linear-gradient(135deg, #34A469 0%, #237a4a 100%);
     }
     .lh-bg-img {
       position: absolute; inset: 0; z-index: 0;
@@ -480,7 +491,7 @@
       font-family: inherit; letter-spacing: .5px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .btn-submit:hover { background: #d04820; transform: translateY(-2px); }
+    .btn-submit:hover { background: #d45000; transform: translateY(-2px); }
 
     /* Alert */
     .alert {
@@ -527,7 +538,7 @@
     }
     @media (max-width: 768px) {
       #hero { height: 320px; }
-      nav { display: none; position: absolute; top: 70px; left: 0; right: 0;
+      nav { display: none; position: absolute; top: 100px; left: 0; right: 0;
         background: #fff; flex-direction: column; padding: 16px; border-bottom: 2px solid var(--red);
         box-shadow: 0 8px 20px rgba(0,0,0,.1); }
       nav.open { display: flex; }
@@ -553,10 +564,10 @@
 <header id="header">
   <div class="container header-inner">
     <a href="#" class="logo">
-      <div class="logo-icon">H</div>
+      <img class="logo-img" src="logo.png" alt="Logo Thế Hệ Mới Preschool" />
       <div class="logo-text">
-        <strong>Thế Hệ Mới</strong>
-        <span>Trường Mầm Non Chất Lượng Cao</span>
+        <strong>Thế Hệ Mới Preschool</strong>
+        <span>Ươm mầm tài năng – Kiến tạo tương lai</span>
       </div>
     </a>
 
