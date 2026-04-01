@@ -8,12 +8,12 @@ import {
   UseGuards,
   Request
 } from '@nestjs/common'
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { AuthService } from './auth.service'
 import { LoginDto } from './dto/login.dto'
 import { JwtAuthGuard } from './jwt-auth.guard'
 
-// @Controller('auth') nghĩa là tất cả các route trong class này
-// đều có prefix là /auth. Ví dụ: POST /auth/login
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   // Dependency Injection: NestJS tự động tạo và inject AuthService vào đây

@@ -20,11 +20,11 @@ export class ContactService {
     })
   }
 
-  // Admin đánh giá trạng thái (Đã liên hệ/Chưa)
-  async updateStatus(id: string, status: string) {
+  // Admin đánh dấu trạng thái đã xử lý hay chưa
+  async updateResolved(id: string, isResolved: boolean) {
     return this.prisma.contact.update({
       where: { id },
-      data: { status }
+      data: { isResolved }
     })
   }
 }

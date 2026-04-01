@@ -2,37 +2,43 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Body,
-  Patch,
   Param,
   UseGuards
 } from '@nestjs/common'
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { ContactService } from './contact.service'
 import { CreateContactDto } from './dto/create-contact.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 
+@ApiTags('Liên hệ')
 @Controller('contact')
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
 
-  // PUBLIC: Phụ huynh gửi form không cần Token
+  // PUBLIC: User gửi form liên hệ — không cần Token
   @Post()
   create(@Body() createContactDto: CreateContactDto) {
-    console.log('hello')
     return this.contactService.create(createContactDto)
   }
 
-  // PRIVATE: Chỉ Admin có Token mới lấy được danh sách
+  // PRIVATE: Admin xem danh sách liên hệ
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.contactService.findAll()
   }
 
-  // PRIVATE: Admin cập nhật trạng thái xử lý
+  // PRIVATE: Admin đánh dấu đã resolve hay chưa
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Patch(':id/status')
-  update(@Param('id') id: string, @Body('status') status: string) {
-    return this.contactService.updateStatus(id, status)
+  @Put(':id/resolve')
+  updateResolved(
+    @Param('id') id: string,
+    @Body('isResolved') isResolved: boolean
+  ) {
+    return this.contactService.updateResolved(id, isResolved)
   }
 }

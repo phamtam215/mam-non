@@ -8,102 +8,72 @@ datasource db {
 }
 
 // -----------------------------------------
-// 1. QUẢN TRỊ VIÊN (Để bạn đăng nhập vào Admin Panel)
+// 1. QUẢN TRỊ VIÊN
 // -----------------------------------------
 model Admin {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  username String  @unique
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
   password String
   name     String
-  role     String  @default("ADMIN")
 }
 
 // -----------------------------------------
-// 2. SLIDER HERO (Hình 1: KinderFit, v.v...)
+// 2. GIỚI THIỆU
 // -----------------------------------------
-model HeroSlider {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  image       String   // URL ảnh nền
-  title       String   // "KinderFit Programme..."
-  description String   // "KinderFit provides 50% more..."
-  order       Int      @default(0) // Thứ tự hiển thị
-  isActive    Boolean  @default(true)
+model Introduction {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  image     String   // Đường dẫn ảnh
+  text      String   // Nội dung giới thiệu
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
 }
 
 // -----------------------------------------
-// 3. PHƯƠNG PHÁP DẠY HỌC (Hình 2: FasTrackKids, Montessori...)
+// 3. CHƯƠNG TRÌNH HỌC
 // -----------------------------------------
-model TeachingMethod {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String   // "Montessori"
-  icon        String   // URL ảnh/icon đại diện
-  tagline     String   // "Chiếc nôi ươm mầm..."
-  description String?  // Mô tả chi tiết khi bấm vào (nếu có)
-  order       Int      @default(0)
+model Curriculum {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  image     String   // Đường dẫn ảnh
+  text      String   // Mô tả chương trình học
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
 }
 
 // -----------------------------------------
-// 4. HOẠT ĐỘNG & THỜI GIAN BIỂU (Hình 3: 2-3 tuổi, 3-4 tuổi...)
-// -----------------------------------------
-model AgeGroupSchedule {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  ageRange      String   @unique // "2-3 tuổi", "3-4 tuổi"
-  coverImage    String   // Ảnh hai bé đeo nơ trong hình
-  
-  // Danh sách các mục Hoạt động (Cột bên trái)
-  activities    String[] // ["Lễ giáo", "Nhận biết tập nói", ...]
-
-  // Danh sách Thời gian biểu (Cột bên phải)
-  timetable     TimeSlot[]
-}
-
-type TimeSlot {
-  time    String // "6h30-8h15"
-  content String // "Đón trẻ, thể dục, tắm nắng"
-}
-
-// -----------------------------------------
-// 5. CƠ SỞ VẬT CHẤT (Hình 4: Ngôi trường đẹp, trang thiết bị...)
-// -----------------------------------------
-model Infrastructure {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String   // "Hệ thống trang thiết bị..."
-  description String   // "Nằm trong quy hoạch..."
-  images      String[] // Mảng chứa các URL ảnh slider cơ sở vật chất
-  icon        String?  // Icon minh họa bên cạnh tiêu đề
-  order       Int      @default(0)
-}
-
-// -----------------------------------------
-// 6. TIN TỨC & CHIA SẺ PHỤ HUYNH (Hình 5, 6)
+// 4. TIN TỨC
 // -----------------------------------------
 model Post {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  slug        String    @unique
-  summary     String?   // Đoạn văn ngắn giới thiệu bên dưới ảnh
-  content     String    // Nội dung chi tiết
-  thumbnail   String    // Ảnh đại diện
-  category    PostType  @default(NEWS)
-  createdAt   DateTime  @default(now())
-}
-
-enum PostType {
-  NEWS        // Tin tức - Sự kiện
-  TESTIMONIAL // Chia sẻ phụ huynh (Hình 6)
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  image     String   // Đường dẫn ảnh
+  text      String   // Nội dung tin tức
+  createdAt DateTime @default(now())
 }
 
 // -----------------------------------------
-// 7. FORM ĐĂNG KÝ TƯ VẤN (Hình 7 - Rất chi tiết)
+// 5. THƯ VIỆN (ảnh hoặc video)
+// -----------------------------------------
+model Library {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  type      LibraryType // IMAGE hoặc VIDEO
+  mediaUrl  String      // Đường dẫn ảnh hoặc link YouTube
+  text      String      // Mô tả
+  createdAt DateTime    @default(now())
+}
+
+enum LibraryType {
+  IMAGE
+  VIDEO
+}
+
+// -----------------------------------------
+// 6. LIÊN HỆ
 // -----------------------------------------
 model Contact {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  parentName    String
-  email         String
-  phone         String
-  campus        String   // "Chọn cơ sở quan tâm"
-  targetClass   String   // "Koala 18-36 tháng", "Panda 3 tuổi"...
-  message       String?  // "Nội dung"
-  status        String   @default("PENDING") // PENDING, CONTACTED
-  createdAt     DateTime @default(now())
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  fullName   String   // Họ tên
+  email      String   // Email
+  phone      String   // Số điện thoại
+  message    String   // Nội dung tin nhắn
+  isResolved Boolean  @default(false) // true = đã xử lý
+  createdAt  DateTime @default(now())
 }

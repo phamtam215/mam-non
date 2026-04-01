@@ -32,6 +32,8 @@ export default tseslint.config(
       // class-validator dùng decorator pattern, typescript-eslint không resolve được kiểu
       // của chúng nên báo "unsafe call" — tắt rule này để tránh false positive
       '@typescript-eslint/no-unsafe-call': 'off',
+      // Prisma generated types không resolve đúng với moduleResolution: nodenext
+      '@typescript-eslint/no-unsafe-member-access': 'off',
       "prettier/prettier": ["error", { endOfLine: "auto" }],
     },
   },
