@@ -5,8 +5,6 @@ import { PrismaModule } from './prisma/prisma.module'
 import { AuthModule } from './modules/auth/auth.module'
 import { ContactModule } from './modules/contact/contact.module'
 import { PostModule } from './modules/post/post.module'
-import { IntroductionModule } from './modules/introduction/introduction.module'
-import { CurriculumModule } from './modules/curriculum/curriculum.module'
 import { LibraryModule } from './modules/library/library.module'
 
 @Module({
@@ -15,8 +13,6 @@ import { LibraryModule } from './modules/library/library.module'
     AuthModule,
     ContactModule,
     PostModule,
-    IntroductionModule,
-    CurriculumModule,
     LibraryModule
   ],
   controllers: [AppController],

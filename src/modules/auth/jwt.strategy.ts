@@ -22,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ignoreExpiration: false,
       // Key dùng để verify chữ ký của token — phải khớp với secret trong AuthModule
       // Nếu khác nhau, token sẽ bị coi là giả mạo và verify thất bại
-      secretOrKey: 'SECRET_KEY_KHONG_DUOC_DE_LO'
+      secretOrKey: process.env.JWT_SECRET as string
     })
   }
 

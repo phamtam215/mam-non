@@ -14,8 +14,8 @@ import { JwtStrategy } from './jwt.strategy'
     // JwtModule.register() cấu hình JWT toàn cục cho toàn bộ ứng dụng
     JwtModule.register({
       global: true, // true = các module khác không cần import lại JwtModule nữa
-      secret: 'SECRET_KEY_KHONG_DUOC_DE_LO', // Sau này nên để vào file .env
-      signOptions: { expiresIn: '2d' } // Token có hạn trong 2 ngày
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: (process.env.JWT_EXPIRES_IN ?? '2d') as `${number}${'s' | 'm' | 'h' | 'd'}` }
     })
   ],
   providers: [AuthService, JwtStrategy], // Đăng ký AuthService và JwtStrategy để NestJS quản lý và inject khi cần

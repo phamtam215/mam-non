@@ -8,8 +8,6 @@ async function main() {
   // Xóa dữ liệu cũ để tránh conflict với index của schema cũ
   await prisma.post.deleteMany()
   await prisma.contact.deleteMany()
-  await prisma.introduction.deleteMany()
-  await prisma.curriculum.deleteMany()
   await prisma.library.deleteMany()
 
   // Drop index cũ của field slug (nếu còn tồn tại từ schema cũ)
@@ -40,16 +38,25 @@ async function main() {
   // Seed bài viết mẫu
   const posts = [
     {
-      image: 'https://placehold.co/800x500?text=Khai+Giang',
-      text: 'Khai giảng năm học mới 2025-2026 tại Mầm Non Hồng Nhung. Buổi lễ diễn ra trong không khí ấm áp với nhiều hoạt động ý nghĩa.'
+      thumbnail: 'https://placehold.co/800x500?text=Khai+Giang',
+      date: new Date('2025-09-05'),
+      category: 'Sự kiện',
+      title: 'Khai giảng năm học mới 2025-2026',
+      content: 'Khai giảng năm học mới 2025-2026 tại Mầm Non Hồng Nhung. Buổi lễ diễn ra trong không khí ấm áp với nhiều hoạt động ý nghĩa.'
     },
     {
-      image: 'https://placehold.co/800x500?text=Be+Kheo+Tay',
-      text: 'Hội thi Bé Khéo Tay tháng 10 với chủ đề Mùa Thu Vàng. Các bé tạo ra những tác phẩm nghệ thuật tuyệt vời.'
+      thumbnail: 'https://placehold.co/800x500?text=Be+Kheo+Tay',
+      date: new Date('2025-10-15'),
+      category: 'Hoạt động',
+      title: 'Hội thi Bé Khéo Tay tháng 10 - Chủ đề Mùa Thu Vàng',
+      content: 'Hội thi Bé Khéo Tay tháng 10 với chủ đề Mùa Thu Vàng. Các bé tạo ra những tác phẩm nghệ thuật tuyệt vời.'
     },
     {
-      image: 'https://placehold.co/800x500?text=Da+Ngoai',
-      text: 'Chuyến dã ngoại tham quan vườn thú Thủ Lệ giúp các bé khám phá thế giới động vật phong phú.'
+      thumbnail: 'https://placehold.co/800x500?text=Da+Ngoai',
+      date: new Date('2025-11-20'),
+      category: 'Dã ngoại',
+      title: 'Chuyến dã ngoại tham quan vườn thú Thủ Lệ',
+      content: 'Chuyến dã ngoại tham quan vườn thú Thủ Lệ giúp các bé khám phá thế giới động vật phong phú.'
     }
   ]
 
@@ -59,91 +66,49 @@ async function main() {
 
   console.log(`✅ Đã tạo ${posts.length} bài viết mẫu!`)
 
-  // Seed giới thiệu
-  const introductions = [
-    {
-      order: 1,
-      image: 'https://placehold.co/800x500?text=Gioi+Thieu+1',
-      text: 'Trường Mầm Non Hồng Nhung được thành lập năm 2010, là ngôi nhà thứ hai của hàng nghìn trẻ em tại TP.HCM. Chúng tôi cam kết mang đến môi trường học tập an toàn, vui vẻ và đầy yêu thương.'
-    },
-    {
-      order: 2,
-      image: 'https://placehold.co/800x500?text=Gioi+Thieu+2',
-      text: 'Với đội ngũ giáo viên được đào tạo bài bản và tận tâm, chúng tôi áp dụng phương pháp giáo dục hiện đại kết hợp triết lý Montessori, giúp mỗi bé phát triển toàn diện về thể chất lẫn tinh thần.'
-    },
-    {
-      order: 3,
-      image: 'https://placehold.co/800x500?text=Gioi+Thieu+3',
-      text: 'Cơ sở vật chất khang trang, sạch sẽ với khuôn viên rộng rãi, đầy đủ trang thiết bị hiện đại. Không gian vui chơi ngoài trời xanh mát giúp các bé phát triển thể chất và tư duy sáng tạo.'
-    }
-  ]
-
-  await prisma.introduction.createMany({ data: introductions })
-  console.log(`✅ Đã tạo ${introductions.length} nội dung giới thiệu!`)
-
-  // Seed chương trình học
-  const curriculums = [
-    {
-      order: 1,
-      image: 'https://placehold.co/800x500?text=Montessori',
-      text: 'Phương pháp Montessori: Khơi dậy tiềm năng tự nhiên của trẻ thông qua việc học bằng thực hành. Trẻ được tự do lựa chọn hoạt động trong môi trường được chuẩn bị sẵn, phát triển tính độc lập và tập trung.'
-    },
-    {
-      order: 2,
-      image: 'https://placehold.co/800x500?text=STEM',
-      text: 'Chương trình STEM mầm non: Giúp trẻ làm quen với Khoa học, Công nghệ, Kỹ thuật và Toán học qua các thí nghiệm vui nhộn, đơn giản phù hợp lứa tuổi, kích thích tư duy logic và sáng tạo.'
-    },
-    {
-      order: 3,
-      image: 'https://placehold.co/800x500?text=Ngon+Ngu',
-      text: 'Phát triển ngôn ngữ: Chương trình đọc sách, kể chuyện và học tiếng Anh từ sớm giúp trẻ xây dựng vốn từ vựng phong phú, tự tin giao tiếp và yêu thích văn học từ bé.'
-    },
-    {
-      order: 4,
-      image: 'https://placehold.co/800x500?text=Am+Nhac+Va+Nghe+Thuat',
-      text: 'Âm nhạc & Nghệ thuật: Các lớp học vẽ, tô màu, múa hát và nhạc cụ giúp trẻ bộc lộ cảm xúc, phát triển thẩm mỹ và khả năng sáng tạo nghệ thuật từ những năm đầu đời.'
-    },
-    {
-      order: 5,
-      image: 'https://placehold.co/800x500?text=The+Chat',
-      text: 'Giáo dục thể chất: Các hoạt động vận động ngoài trời, yoga thiếu nhi và thể dục nhịp điệu giúp trẻ phát triển thể lực, rèn luyện sự dẻo dai và tinh thần đồng đội.'
-    }
-  ]
-
-  await prisma.curriculum.createMany({ data: curriculums })
-  console.log(`✅ Đã tạo ${curriculums.length} chương trình học!`)
-
   // Seed thư viện
   const libraries = [
     {
       type: 'IMAGE' as const,
-      mediaUrl: 'https://placehold.co/800x600?text=Anh+Lop+Hoc',
-      text: 'Góc học tập Montessori với đồ dùng học liệu sinh động, màu sắc'
+      imageUrl: 'https://placehold.co/800x600?text=Anh+Lop+Hoc',
+      videoUrl: null,
+      date: new Date('2025-09-10'),
+      title: 'Góc học tập Montessori'
     },
     {
       type: 'IMAGE' as const,
-      mediaUrl: 'https://placehold.co/800x600?text=San+Choi',
-      text: 'Sân chơi ngoài trời rộng rãi, an toàn cho các bé vận động'
+      imageUrl: 'https://placehold.co/800x600?text=San+Choi',
+      videoUrl: null,
+      date: new Date('2025-10-01'),
+      title: 'Sân chơi ngoài trời'
     },
     {
       type: 'IMAGE' as const,
-      mediaUrl: 'https://placehold.co/800x600?text=Le+Hoi',
-      text: 'Lễ hội Trung Thu 2025 — các bé rước đèn và phá cỗ vui tươi'
+      imageUrl: 'https://placehold.co/800x600?text=Le+Hoi',
+      videoUrl: null,
+      date: new Date('2025-10-15'),
+      title: 'Lễ hội Trung Thu 2025'
     },
     {
       type: 'IMAGE' as const,
-      mediaUrl: 'https://placehold.co/800x600?text=Nau+An',
-      text: 'Bếp ăn đạt chuẩn vệ sinh, thực đơn dinh dưỡng được chuyên gia tư vấn'
+      imageUrl: 'https://placehold.co/800x600?text=Nau+An',
+      videoUrl: null,
+      date: new Date('2025-11-05'),
+      title: 'Bếp ăn đạt chuẩn vệ sinh'
     },
     {
       type: 'VIDEO' as const,
-      mediaUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      text: 'Video giới thiệu tổng quan trường Mầm Non Hồng Nhung 2025'
+      imageUrl: null,
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      date: new Date('2025-08-20'),
+      title: 'Giới thiệu tổng quan trường Mầm Non Hồng Nhung 2025'
     },
     {
       type: 'VIDEO' as const,
-      mediaUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      text: 'Hoạt động ngoại khóa — Ngày hội thể thao thiếu nhi tháng 3/2025'
+      imageUrl: null,
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      date: new Date('2025-03-15'),
+      title: 'Ngày hội thể thao thiếu nhi tháng 3/2025'
     }
   ]
 

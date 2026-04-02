@@ -18,34 +18,15 @@ model Admin {
 }
 
 // -----------------------------------------
-// 2. GIỚI THIỆU
-// -----------------------------------------
-model Introduction {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  image     String   // Đường dẫn ảnh
-  text      String   // Nội dung giới thiệu
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-}
-
-// -----------------------------------------
-// 3. CHƯƠNG TRÌNH HỌC
-// -----------------------------------------
-model Curriculum {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  image     String   // Đường dẫn ảnh
-  text      String   // Mô tả chương trình học
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-}
-
-// -----------------------------------------
-// 4. TIN TỨC
+// 2. TIN TỨC
 // -----------------------------------------
 model Post {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  image     String   // Đường dẫn ảnh
-  text      String   // Nội dung tin tức
+  thumbnail String   // Ảnh đại diện (đường dẫn)
+  date      DateTime // Ngày đăng
+  category  String   // Loại tin tức
+  title     String   // Tiêu đề
+  content   String   // Tin chi tiết
   createdAt DateTime @default(now())
 }
 
@@ -55,8 +36,10 @@ model Post {
 model Library {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
   type      LibraryType // IMAGE hoặc VIDEO
-  mediaUrl  String      // Đường dẫn ảnh hoặc link YouTube
-  text      String      // Mô tả
+  imageUrl  String?     // Đường dẫn ảnh (khi type = IMAGE)
+  videoUrl  String?     // Đường dẫn video (khi type = VIDEO)
+  date      DateTime    // Ngày
+  title     String      // Tiêu đề
   createdAt DateTime    @default(now())
 }
 
