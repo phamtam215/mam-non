@@ -3,6 +3,7 @@ import {
   UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { Throttle } from '@nestjs/throttler'
 import { ApiTags, ApiBearerAuth, ApiQuery, ApiOperation, ApiConsumes, ApiBody } from '@nestjs/swagger'
 import { LibraryService } from './library.service'
 import { CreateLibraryDto } from './dto/create-library.dto'
@@ -31,6 +32,7 @@ export class LibraryController {
   @ApiBody({ schema: { type: 'object', properties: { file: { type: 'string', format: 'binary' } } } })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @Throttle({ default: { ttl: 60_000, limit: 20 } }) // Tối đa 20 lần upload/phút
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadImage(

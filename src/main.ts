@@ -3,9 +3,20 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import helmet from 'helmet'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+
+  // Helmet: bật các security header (XSS Protection, Clickjacking, MIME sniffing, ...)
+  app.use(helmet())
+
+  // CORS: chỉ cho phép domain FE truy cập. Đặt ALLOWED_ORIGIN trong .env
+  app.enableCors({
+    origin: process.env.ALLOWED_ORIGIN ?? false,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true
+  })
 
   app.useGlobalPipes(
     new ValidationPipe({
