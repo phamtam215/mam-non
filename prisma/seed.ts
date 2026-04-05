@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
 import * as bcrypt from 'bcrypt'
+import { generateSlug } from '../src/modules/post/utils/slug.util'
 
 const prisma = new PrismaClient()
 
@@ -61,7 +62,7 @@ async function main() {
   ]
 
   for (const post of posts) {
-    await prisma.post.create({ data: post })
+    await prisma.post.create({ data: { ...post, slug: generateSlug(post.title) } })
   }
 
   console.log(`✅ Đã tạo ${posts.length} bài viết mẫu!`)

@@ -22,6 +22,7 @@ model Admin {
 // -----------------------------------------
 model Post {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique // Slug SEO-friendly
   thumbnail String   // Ảnh đại diện (đường dẫn)
   date      DateTime // Ngày đăng
   category  String   // Loại tin tức

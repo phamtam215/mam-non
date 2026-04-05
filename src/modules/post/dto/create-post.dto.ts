@@ -1,7 +1,16 @@
-import { IsNotEmpty, IsString, IsDateString } from 'class-validator'
-import { ApiProperty } from '@nestjs/swagger'
+import { IsNotEmpty, IsOptional, IsString, IsDateString, Matches } from 'class-validator'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
 export class CreatePostDto {
+  @ApiPropertyOptional({
+    example: 'truong-to-chuc-le-hoi-trung-thu-2025',
+    description: 'Slug SEO-friendly. Nếu bỏ trống sẽ tự động tạo từ tiêu đề.'
+  })
+  @IsOptional()
+  @IsString()
+  @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, { message: 'Slug chỉ được chứa chữ thường, số và dấu gạch ngang' })
+  slug?: string
+
   @ApiProperty({ example: 'https://example.com/image.jpg' })
   @IsString()
   @IsNotEmpty({ message: 'Vui lòng nhập đường dẫn ảnh đại diện' })
