@@ -8,12 +8,17 @@ import helmet from 'helmet'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  // Helmet: bật các security header (XSS Protection, Clickjacking, MIME sniffing, ...)
-  app.use(helmet())
+  // Helmet: bật các security header, cho phép ảnh /uploads/ được load cross-origin từ FE
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' }
+    })
+  )
 
   // CORS: chỉ cho phép domain FE truy cập. Đặt ALLOWED_ORIGIN trong .env
+  const allowedOrigin = process.env.ALLOWED_ORIGIN
   app.enableCors({
-    origin: process.env.ALLOWED_ORIGIN ?? false,
+    origin: allowedOrigin ? allowedOrigin.split(',').map(o => o.trim()) : true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true
   })
