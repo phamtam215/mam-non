@@ -1,18 +1,40 @@
 import {
-  Controller, Get, Post, Put, Delete, Body, Param, UseGuards,
-  UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Req,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator
 } from '@nestjs/common'
+import type { Request } from 'express'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Throttle } from '@nestjs/throttler'
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiParam, ApiConsumes, ApiBody } from '@nestjs/swagger'
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiConsumes,
+  ApiBody
+} from '@nestjs/swagger'
 import { PostService } from './post.service'
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { UploadService } from '../upload/upload.service'
+import { NormalizeUploadsInterceptor } from '../../common/interceptors/normalize-uploads.interceptor'
 
 @ApiTags('Tin tức')
 @Controller('post')
+@UseInterceptors(NormalizeUploadsInterceptor)
 export class PostController {
   constructor(
     private readonly postService: PostService,
@@ -45,24 +67,34 @@ export class PostController {
   // PRIVATE: Admin upload ảnh thumbnail cho bài viết
   @ApiOperation({ summary: 'Upload ảnh thumbnail cho bài viết (Admin)' })
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ schema: { type: 'object', properties: { file: { type: 'string', format: 'binary' } } } })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { file: { type: 'string', format: 'binary' } }
+    }
+  })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Throttle({ default: { ttl: 60_000, limit: 20 } }) // Tối đa 20 lần upload/phút
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadThumbnail(
+    @Req() req: Request,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 2 * 1024 * 1024, message: 'Ảnh tối đa 2MB' }),
+          new MaxFileSizeValidator({
+            maxSize: 2 * 1024 * 1024,
+            message: 'Ảnh tối đa 2MB'
+          }),
           new FileTypeValidator({ fileType: /^image\/(jpeg|png|webp)$/ })
         ]
       })
     )
     file: Express.Multer.File
   ) {
-    const url = await this.uploadService.saveImage(file, 'posts')
+    const path = await this.uploadService.saveImage(file, 'posts')
+    const url = `${req.protocol}://${req.get('host')}${path}`
     return { url }
   }
 

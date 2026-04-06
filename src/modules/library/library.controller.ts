@@ -1,19 +1,43 @@
 import {
-  Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards,
-  UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Req,
+  Query,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator
 } from '@nestjs/common'
+import type { Request } from 'express'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Throttle } from '@nestjs/throttler'
-import { ApiTags, ApiBearerAuth, ApiQuery, ApiOperation, ApiParam, ApiConsumes, ApiBody } from '@nestjs/swagger'
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiQuery,
+  ApiOperation,
+  ApiParam,
+  ApiConsumes,
+  ApiBody
+} from '@nestjs/swagger'
 import { LibraryService } from './library.service'
 import { CreateLibraryDto } from './dto/create-library.dto'
 import { UpdateLibraryDto } from './dto/update-library.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { LibraryType } from '@prisma/client'
 import { UploadService } from '../upload/upload.service'
+import { NormalizeUploadsInterceptor } from '../../common/interceptors/normalize-uploads.interceptor'
 
 @ApiTags('Thư viện')
 @Controller('library')
+@UseInterceptors(NormalizeUploadsInterceptor)
 export class LibraryController {
   constructor(
     private readonly libraryService: LibraryService,
@@ -30,24 +54,34 @@ export class LibraryController {
   // PRIVATE: Admin upload ảnh vào thư viện
   @ApiOperation({ summary: 'Upload ảnh vào thư viện (Admin)' })
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ schema: { type: 'object', properties: { file: { type: 'string', format: 'binary' } } } })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { file: { type: 'string', format: 'binary' } }
+    }
+  })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Throttle({ default: { ttl: 60_000, limit: 20 } }) // Tối đa 20 lần upload/phút
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadImage(
+    @Req() req: Request,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 2 * 1024 * 1024, message: 'Ảnh tối đa 2MB' }),
+          new MaxFileSizeValidator({
+            maxSize: 2 * 1024 * 1024,
+            message: 'Ảnh tối đa 2MB'
+          }),
           new FileTypeValidator({ fileType: /^image\/(jpeg|png|webp)$/ })
         ]
       })
     )
     file: Express.Multer.File
   ) {
-    const url = await this.uploadService.saveImage(file, 'library')
+    const path = await this.uploadService.saveImage(file, 'library')
+    const url = `${req.protocol}://${req.get('host')}${path}`
     return { url }
   }
 
