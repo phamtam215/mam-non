@@ -16,10 +16,14 @@ import { LibraryModule } from './modules/library/library.module'
     // Rate limiting toàn cục: tối đa 60 request/phút mỗi IP
     ThrottlerModule.forRoot([{ ttl: 60_000, limit: 60 }]),
 
-    // Serve thư mục uploads/ tại URL /uploads/*
+    // Serve thư mục uploads/ tại URL /uploads/* với cache 7 ngày
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'uploads'),
-      serveRoot: '/uploads'
+      serveRoot: '/uploads',
+      serveStaticOptions: {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày (ms)
+        immutable: true
+      }
     }),
     PrismaModule,
     AuthModule,

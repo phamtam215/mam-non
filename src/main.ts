@@ -4,9 +4,23 @@ import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import helmet from 'helmet'
+import compression from 'compression'
 
 async function bootstrap() {
+  // Guard: đảm bảo các biến môi trường bắt buộc tồn tại trước khi khởi động
+  const requiredEnvVars = ['DATABASE_URL', 'JWT_SECRET']
+  for (const key of requiredEnvVars) {
+    if (!process.env[key])
+      throw new Error(`Thiếu biến môi trường bắt buộc: ${key}`)
+  }
+
   const app = await NestFactory.create(AppModule)
+
+  // Graceful shutdown: xử lý SIGTERM/SIGINT để đóng kết nối DB sạch sẽ
+  app.enableShutdownHooks()
+
+  // Gzip compression: giảm kích thước response JSON đáng kể (thường 60-80%)
+  app.use(compression())
 
   // Helmet: bật các security header, cho phép ảnh /uploads/ được load cross-origin từ FE
   app.use(
@@ -44,6 +58,6 @@ async function bootstrap() {
     console.log('Swagger UI: http://localhost:3000/api')
   }
 
-  await app.listen(3000)
+  await app.listen(process.env.PORT ?? 3000)
 }
 bootstrap()
