@@ -1,12 +1,13 @@
 import {
-  Controller, Get, Post, Body, Query, UseGuards,
+  Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards,
   UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Throttle } from '@nestjs/throttler'
-import { ApiTags, ApiBearerAuth, ApiQuery, ApiOperation, ApiConsumes, ApiBody } from '@nestjs/swagger'
+import { ApiTags, ApiBearerAuth, ApiQuery, ApiOperation, ApiParam, ApiConsumes, ApiBody } from '@nestjs/swagger'
 import { LibraryService } from './library.service'
 import { CreateLibraryDto } from './dto/create-library.dto'
+import { UpdateLibraryDto } from './dto/update-library.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { LibraryType } from '@prisma/client'
 import { UploadService } from '../upload/upload.service'
@@ -56,5 +57,25 @@ export class LibraryController {
   @Post()
   create(@Body() createLibraryDto: CreateLibraryDto) {
     return this.libraryService.create(createLibraryDto)
+  }
+
+  // PRIVATE: Admin cập nhật mục thư viện theo ID
+  @ApiOperation({ summary: 'Cập nhật mục thư viện theo ID (Admin)' })
+  @ApiParam({ name: 'id', description: 'MongoDB ObjectId của mục thư viện' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateLibraryDto: UpdateLibraryDto) {
+    return this.libraryService.update(id, updateLibraryDto)
+  }
+
+  // PRIVATE: Admin xóa mục thư viện theo ID
+  @ApiOperation({ summary: 'Xóa mục thư viện theo ID (Admin)' })
+  @ApiParam({ name: 'id', description: 'MongoDB ObjectId của mục thư viện' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.libraryService.remove(id)
   }
 }

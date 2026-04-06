@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
 import { CreatePostDto } from './dto/create-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
 import { generateSlug, makeUniqueSlug } from './utils/slug.util'
 
 @Injectable()
@@ -36,13 +37,36 @@ export class PostService {
     return this.prisma.post.create({ data: { ...data, slug: uniqueSlug } })
   }
 
+  // ADMIN: Cập nhật tin tức theo ID
+  async update(id: string, dto: UpdatePostDto) {
+    await this.findById(id)
+    const partial = dto as Partial<CreatePostDto>
+    const { slug: rawSlug, title, ...rest } = partial
+    let slug: string | undefined
+    if (rawSlug !== undefined) {
+      slug = await this.resolveUniqueSlug(rawSlug, 0, id)
+    } else if (title) {
+      slug = await this.resolveUniqueSlug(generateSlug(title), 0, id)
+    }
+    return this.prisma.post.update({
+      where: { id },
+      data: { ...rest, ...(title ? { title } : {}), ...(slug ? { slug } : {}) }
+    })
+  }
+
+  // ADMIN: Xóa tin tức theo ID
+  async remove(id: string) {
+    await this.findById(id)
+    return this.prisma.post.delete({ where: { id } })
+  }
+
   // Tự thêm hậu tố -1, -2,... cho slug sinh tự động nếu trùng
-  private async resolveUniqueSlug(base: string, suffix = 0): Promise<string> {
+  private async resolveUniqueSlug(base: string, suffix = 0, excludeId?: string): Promise<string> {
     const candidate = makeUniqueSlug(base, suffix)
     const existing = await this.prisma.post.findUnique({
       where: { slug: candidate }
     })
-    if (!existing) return candidate
-    return this.resolveUniqueSlug(base, suffix + 1)
+    if (!existing || existing.id === excludeId) return candidate
+    return this.resolveUniqueSlug(base, suffix + 1, excludeId)
   }
 }

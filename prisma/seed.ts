@@ -6,17 +6,10 @@ import { generateSlug } from '../src/modules/post/utils/slug.util'
 const prisma = new PrismaClient()
 
 async function main() {
-  // Xóa dữ liệu cũ để tránh conflict với index của schema cũ
+  // Xóa dữ liệu cũ
   await prisma.post.deleteMany()
   await prisma.contact.deleteMany()
   await prisma.library.deleteMany()
-
-  // Drop index cũ của field slug (nếu còn tồn tại từ schema cũ)
-  try {
-    await prisma.$runCommandRaw({ dropIndexes: 'Post', index: 'Post_slug_key' })
-  } catch {
-    // Không sao nếu index không tồn tại
-  }
 
   // Mã hóa mật khẩu: Admin@123
   const hashedPassword = await bcrypt.hash('Admin@123', 10)
@@ -43,26 +36,31 @@ async function main() {
       date: new Date('2025-09-05'),
       category: 'Sự kiện',
       title: 'Khai giảng năm học mới 2025-2026',
-      content: 'Khai giảng năm học mới 2025-2026 tại Mầm Non Hồng Nhung. Buổi lễ diễn ra trong không khí ấm áp với nhiều hoạt động ý nghĩa.'
+      content:
+        'Khai giảng năm học mới 2025-2026 tại Mầm Non Hồng Nhung. Buổi lễ diễn ra trong không khí ấm áp với nhiều hoạt động ý nghĩa.'
     },
     {
       thumbnail: 'https://placehold.co/800x500?text=Be+Kheo+Tay',
       date: new Date('2025-10-15'),
       category: 'Hoạt động',
       title: 'Hội thi Bé Khéo Tay tháng 10 - Chủ đề Mùa Thu Vàng',
-      content: 'Hội thi Bé Khéo Tay tháng 10 với chủ đề Mùa Thu Vàng. Các bé tạo ra những tác phẩm nghệ thuật tuyệt vời.'
+      content:
+        'Hội thi Bé Khéo Tay tháng 10 với chủ đề Mùa Thu Vàng. Các bé tạo ra những tác phẩm nghệ thuật tuyệt vời.'
     },
     {
       thumbnail: 'https://placehold.co/800x500?text=Da+Ngoai',
       date: new Date('2025-11-20'),
       category: 'Dã ngoại',
       title: 'Chuyến dã ngoại tham quan vườn thú Thủ Lệ',
-      content: 'Chuyến dã ngoại tham quan vườn thú Thủ Lệ giúp các bé khám phá thế giới động vật phong phú.'
+      content:
+        'Chuyến dã ngoại tham quan vườn thú Thủ Lệ giúp các bé khám phá thế giới động vật phong phú.'
     }
   ]
 
   for (const post of posts) {
-    await prisma.post.create({ data: { ...post, slug: generateSlug(post.title) } })
+    await prisma.post.create({
+      data: { ...post, slug: generateSlug(post.title) }
+    })
   }
 
   console.log(`✅ Đã tạo ${posts.length} bài viết mẫu!`)

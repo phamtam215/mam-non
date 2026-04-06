@@ -1,5 +1,5 @@
 import {
-  Controller, Get, Post, Body, Param, UseGuards,
+  Controller, Get, Post, Put, Delete, Body, Param, UseGuards,
   UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
@@ -7,6 +7,7 @@ import { Throttle } from '@nestjs/throttler'
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiParam, ApiConsumes, ApiBody } from '@nestjs/swagger'
 import { PostService } from './post.service'
 import { CreatePostDto } from './dto/create-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { UploadService } from '../upload/upload.service'
 
@@ -65,12 +66,32 @@ export class PostController {
     return { url }
   }
 
-  // PRIVATE: Admin đăng tin tức mới
+  // PRIVATE: Admin tạo tin tức mới
   @ApiOperation({ summary: 'Tạo tin tức mới (Admin)' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createPostDto: CreatePostDto) {
     return this.postService.create(createPostDto)
+  }
+
+  // PRIVATE: Admin cập nhật tin tức theo ID
+  @ApiOperation({ summary: 'Cập nhật tin tức theo ID (Admin)' })
+  @ApiParam({ name: 'id', description: 'MongoDB ObjectId của bài viết' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    return this.postService.update(id, updatePostDto)
+  }
+
+  // PRIVATE: Admin xóa tin tức theo ID
+  @ApiOperation({ summary: 'Xóa tin tức theo ID (Admin)' })
+  @ApiParam({ name: 'id', description: 'MongoDB ObjectId của bài viết' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.postService.remove(id)
   }
 }
