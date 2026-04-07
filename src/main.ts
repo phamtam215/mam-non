@@ -1,10 +1,18 @@
 import 'dotenv/config'
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-import { ValidationPipe } from '@nestjs/common'
+import { Logger, ValidationPipe } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import type { NextFunction, Request, Response } from 'express'
 import helmet from 'helmet'
 import compression from 'compression'
+
+type RequestWithUser = Request & {
+  user?: {
+    userId?: number
+    username?: string
+  }
+}
 
 async function bootstrap() {
   // Guard: đảm bảo các biến môi trường bắt buộc tồn tại trước khi khởi động
@@ -15,6 +23,7 @@ async function bootstrap() {
   }
 
   const app = await NestFactory.create(AppModule)
+  const httpLogger = new Logger('HTTP')
 
   // Graceful shutdown: xử lý SIGTERM/SIGINT để đóng kết nối DB sạch sẽ
   app.enableShutdownHooks()
@@ -35,6 +44,18 @@ async function bootstrap() {
     origin: allowedOrigin ? allowedOrigin.split(',').map(o => o.trim()) : true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true
+  })
+
+  // Request logging: ghi lại mọi request, URL và người gọi nếu đã xác thực JWT
+  app.use((req: RequestWithUser, res: Response, next: NextFunction) => {
+    res.on('finish', () => {
+      const requester = req.user?.username ?? 'anonymous'
+      httpLogger.log(
+        `${req.method} ${req.originalUrl} ${res.statusCode} requester=${requester}`
+      )
+    })
+
+    next()
   })
 
   app.useGlobalPipes(
