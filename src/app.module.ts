@@ -18,7 +18,7 @@ import { LibraryModule } from './modules/library/library.module'
 
     // Serve thư mục uploads/ tại URL /uploads/* với cache 7 ngày
     ServeStaticModule.forRoot({
-      rootPath: join(process.cwd(), 'uploads'),
+      rootPath: join(process.cwd(), '..', 'uploads'),
       serveRoot: '/uploads',
       serveStaticOptions: {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày (ms)

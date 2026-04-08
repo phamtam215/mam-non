@@ -36,7 +36,7 @@ function isValidImageBuffer(buffer: Buffer): boolean {
 
 @Injectable()
 export class UploadService {
-  private readonly uploadsRoot = resolve(process.cwd(), 'uploads')
+  private readonly uploadsRoot = resolve(process.cwd(), '..', 'uploads')
 
   async saveImage(
     file: Express.Multer.File,
