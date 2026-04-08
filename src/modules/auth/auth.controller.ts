@@ -14,7 +14,7 @@ import { LoginDto } from './dto/login.dto'
 import { JwtAuthGuard } from './jwt-auth.guard'
 
 @ApiTags('Auth')
-@Controller('auth')
+@Controller()
 export class AuthController {
   // Dependency Injection: NestJS tự động tạo và inject AuthService vào đây
   // Không cần phải tự new AuthService() thủ công
@@ -32,16 +32,5 @@ export class AuthController {
   @Get('profile')
   getProfile(@Request() req: { user: { userId: number; username: string } }) {
     return req.user
-  }
-
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Đăng xuất (client xóa token)' })
-  @UseGuards(JwtAuthGuard)
-  @HttpCode(HttpStatus.OK)
-  @Post('logout')
-  logout() {
-    // JWT là stateless — server không lưu token.
-    // Client có trách nhiệm xóa token khỏi storage sau khi nhận response này.
-    return { message: 'Đăng xuất thành công' }
   }
 }
