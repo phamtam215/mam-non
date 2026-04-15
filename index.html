@@ -3,328 +3,590 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch Tập Gym Toàn Máy - PT Professional Edition</title>
+    <title>Lịch Tập Máy Cho Người Mới</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .tab-active { border-bottom: 4px solid #ef4444; color: #ef4444; background: #fff1f2; }
-        .machine-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .machine-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-main: #f4f1eb;
+            --bg-soft: #fffaf3;
+            --ink: #1f2937;
+            --muted: #6b7280;
+            --accent: #d94e30;
+            --accent-soft: #fff1ec;
+            --line: #e9e3da;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background:
+                radial-gradient(circle at 12% 8%, #ffe4d8 0, transparent 26%),
+                radial-gradient(circle at 95% 30%, #dcecfb 0, transparent 34%),
+                var(--bg-main);
+            color: var(--ink);
+        }
+
+        .glass-nav {
+            background: rgba(255, 250, 243, 0.88);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-button {
+            color: #7c8595;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab-button:hover {
+            color: #243041;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .tab-active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .lift-card {
+            border: 1px solid var(--line);
+            box-shadow: 0 8px 24px rgba(22, 30, 45, 0.06);
+        }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen pb-24">
+<body class="pb-16">
 
-    <!-- Header PT High-End -->
-    <header class="bg-slate-900 text-white py-12 px-4 text-center relative shadow-2xl">
-        <div class="absolute inset-0 opacity-10 flex justify-around items-center pointer-events-none">
-            <i class="fas fa-cogs text-[15rem]"></i>
-        </div>
-        <div class="relative z-10">
-            <span class="bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-[0.2em] mb-3 inline-block">Pro Gym Member</span>
-            <h1 class="text-4xl font-black italic tracking-tighter uppercase mb-2">MAX MACHINE WORKOUT</h1>
-            <p class="text-slate-400 text-sm max-w-md mx-auto font-medium">Lộ trình tận dụng tối đa thiết bị phòng Gym cho mục tiêu Giảm cân & Săn chắc.</p>
+    <header class="pt-10 md:pt-14 px-4 md:px-6">
+        <div class="max-w-3xl mx-auto rounded-3xl bg-[#152236] text-white p-6 md:p-8 relative overflow-hidden">
+            <div class="absolute -top-8 -left-8 w-36 h-36 bg-[#f27549] rounded-full blur-3xl opacity-35"></div>
+            <div class="absolute -bottom-10 right-0 w-40 h-40 bg-[#7ab0e8] rounded-full blur-3xl opacity-30"></div>
+            <div class="relative z-10">
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[11px] font-semibold tracking-wide">
+                    <i class="fas fa-seedling text-[#ffd37c]"></i>
+                    Lộ trình cho người mới
+                </span>
+                <h1 class="mt-4 text-2xl md:text-4xl font-extrabold tracking-tight leading-tight">
+                    Gym Toàn Máy Gọn Gàng, Dễ Theo, Khoa Học
+                </h1>
+                <p class="mt-3 text-sm md:text-base text-slate-200 leading-relaxed">
+                    Thiết kế cho: nam 1m63 - 65kg và nữ 1m52 - 52kg. Mục tiêu 8 tuần đầu: học kỹ thuật, tăng nền tảng, giảm mỡ bền vững.
+                </p>
+            </div>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-40 bg-white border-b shadow-sm">
-        <div class="flex overflow-x-auto justify-between max-w-2xl mx-auto no-scrollbar">
-            <button onclick="switchDay(1)" id="tab-1" class="flex-1 min-w-[90px] py-5 font-black text-gray-400 uppercase text-xs tracking-widest tab-active">Buổi 1</button>
-            <button onclick="switchDay(2)" id="tab-2" class="flex-1 min-w-[90px] py-5 font-black text-gray-400 uppercase text-xs tracking-widest">Buổi 2</button>
-            <button onclick="switchDay(3)" id="tab-3" class="flex-1 min-w-[90px] py-5 font-black text-gray-400 uppercase text-xs tracking-widest">Buổi 3</button>
-            <button onclick="switchDay(4)" id="tab-4" class="flex-1 min-w-[90px] py-5 font-black text-gray-400 uppercase text-xs tracking-widest">Buổi 4</button>
-            <button onclick="switchDay(5)" id="tab-5" class="flex-1 min-w-[90px] py-5 font-black text-gray-400 uppercase text-xs tracking-widest">Buổi 5</button>
+    <section class="max-w-3xl mx-auto px-4 md:px-6 mt-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="bg-white rounded-2xl p-4 border border-[var(--line)]">
+                <p class="text-[11px] uppercase tracking-wide text-[var(--muted)] font-semibold">Thời lượng</p>
+                <p class="text-sm font-bold mt-1">40-55 phút</p>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-[var(--line)]">
+                <p class="text-[11px] uppercase tracking-wide text-[var(--muted)] font-semibold">Cường độ</p>
+                <p class="text-sm font-bold mt-1 text-[var(--accent)]">RPE 5-6</p>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-[var(--line)]">
+                <p class="text-[11px] uppercase tracking-wide text-[var(--muted)] font-semibold">Nghỉ hiệp</p>
+                <p class="text-sm font-bold mt-1">75-90 giây</p>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-[var(--line)]">
+                <p class="text-[11px] uppercase tracking-wide text-[var(--muted)] font-semibold">Nguyên tắc</p>
+                <p class="text-sm font-bold mt-1">Form trước tạ</p>
+            </div>
+        </div>
+    </section>
+
+    <nav class="sticky top-0 z-40 glass-nav mt-5">
+        <div class="flex overflow-x-auto max-w-3xl mx-auto no-scrollbar px-2 md:px-4">
+            <button onclick="switchView('guide')" id="tab-guide" class="tab-button tab-active flex-1 min-w-[110px] py-4 text-[11px] font-bold uppercase tracking-wider">Trang chung</button>
+            <button onclick="switchDay(1)" id="tab-1" class="tab-button flex-1 min-w-[96px] py-4 text-[11px] font-bold uppercase tracking-wider">Buổi 1</button>
+            <button onclick="switchDay(2)" id="tab-2" class="tab-button flex-1 min-w-[96px] py-4 text-[11px] font-bold uppercase tracking-wider">Buổi 2</button>
+            <button onclick="switchDay(3)" id="tab-3" class="tab-button flex-1 min-w-[96px] py-4 text-[11px] font-bold uppercase tracking-wider">Buổi 3</button>
+            <button onclick="switchDay(4)" id="tab-4" class="tab-button flex-1 min-w-[96px] py-4 text-[11px] font-bold uppercase tracking-wider">Buổi 4</button>
+            <button onclick="switchDay(5)" id="tab-5" class="tab-button flex-1 min-w-[96px] py-4 text-[11px] font-bold uppercase tracking-wider">Buổi 5</button>
         </div>
     </nav>
 
-    <!-- Workout Engine -->
-    <main class="max-w-2xl mx-auto p-4" id="workout-content">
-        <!-- Content will be rendered here -->
-    </main>
+    <main class="max-w-3xl mx-auto p-4 md:p-6" id="workout-content"></main>
 
-    <!-- PT Floating Checklist -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <button onclick="toggleChecklist()" class="bg-slate-900 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center border-2 border-red-500">
-            <i class="fas fa-clipboard-list text-xl"></i>
-        </button>
-    </div>
-
-    <!-- Video Modal -->
     <div id="videoModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-slate-900/98 backdrop-blur-md" onclick="closeModal()"></div>
-        <div class="relative bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-white/20">
-            <div class="p-5 flex justify-between items-center bg-gray-50 border-b">
+        <div class="absolute inset-0 bg-slate-950/85 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="relative bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl">
+            <div class="p-4 md:p-5 flex justify-between items-center bg-slate-50 border-b">
                 <div>
-                    <span class="text-[10px] font-black text-red-600 uppercase tracking-widest">PT Professional Guide</span>
-                    <h3 id="modalTitle" class="font-extrabold text-slate-800 text-xl uppercase italic">Động tác</h3>
+                    <span class="text-[10px] font-bold text-[var(--accent)] uppercase tracking-widest">Video hướng dẫn</span>
+                    <h3 id="modalTitle" class="font-extrabold text-slate-900 text-lg">Động tác</h3>
                 </div>
-                <button onclick="closeModal()" class="w-10 h-10 rounded-full bg-white shadow-sm border flex items-center justify-center text-slate-400 hover:text-red-600">
+                <button onclick="closeModal()" aria-label="Đóng video" class="w-10 h-10 rounded-full bg-white border flex items-center justify-center text-slate-400 hover:text-[var(--accent)] transition-colors">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="aspect-video bg-black">
-                <iframe id="youtubeIframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="relative pt-[56.25%] bg-black">
+                <iframe id="youtubeIframe" class="absolute inset-0 w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
 
     <script>
+        const stretchGuide = [
+            'Giãn cơ đùi trước: đứng kéo cổ chân về mông, mỗi bên 30 giây.',
+            'Giãn cơ đùi sau: gập hông giữ lưng thẳng, mỗi bên 30 giây.',
+            'Giãn ngực và vai trước: bám tường mở ngực, mỗi bên 30 giây.',
+            'Giãn lưng xô: nắm điểm tựa cao, đẩy hông về sau 30 giây.',
+            'Hít thở phục hồi: 6 nhịp chậm (hít 4 giây - thở 6 giây).'
+        ];
+
+        const generalGuide = {
+            schedule: 'T2 buổi 1, T3 buổi 2, T4 nghỉ hoặc đi bộ nhẹ, T5 buổi 3, T6 buổi 4, T7 buổi 5 nhẹ.',
+            rules: [
+                'Chỉ tăng tạ khi hoàn thành đủ số lần lặp với form đẹp ở tất cả hiệp.',
+                'Giữ 2-3 lần lặp dự trữ, không tập tới kiệt sức trong 4 tuần đầu.',
+                'Nếu đau khớp, giảm tạ hoặc giảm biên độ ngay.',
+                'Ưu tiên ngủ đủ và uống nước trước khi nghĩ đến tăng khối lượng tập.'
+            ],
+            warmup: [
+                'Đi bộ 5-7 phút tốc độ nhẹ.',
+                'Xoay khớp cổ tay, vai, hông, gối trong 2-3 phút.',
+                'Làm 1 hiệp khởi động với tạ rất nhẹ trước bài chính.'
+            ]
+        };
+
         const workoutData = {
             1: {
-                title: "Buổi 1: Thân dưới & Cardio (Máy lớn)",
+                title: "Thứ 2: Thân dưới & Cardio nền tảng",
+                goal: "Làm quen kỹ thuật và nhịp tập nhẹ",
+                duration: "45-50 phút",
+                rpe: "5-6/10",
+                rest: "75-90 giây",
                 exercises: [
                     {
-                        name: "Máy Đạp Đùi", tech: "Leg Press Machine", sets: "4 hiệp x 15 lần", video: "IZxyjW7MPJQ",
-                        setup: "Chỉnh ghế sao cho khi hạ chân, gối không chạm ngực. Bàn chân đặt giữa bàn đạp.",
-                        action: "Đạp mạnh ra (không khóa gối), hạ tạ chậm trong 3 giây.",
-                        breath: "Đạp ra: Thở mạnh miệng. Hạ xuống: Hít sâu mũi.",
-                        ptNote: "Gót chân luôn dính chặt vào bàn đạp. Không nhấc mông khỏi ghế khi hạ tạ."
+                        name: "Máy Đạp Đùi (Leg Press)",
+                        tech: "Leg Press Machine",
+                        sets: "3 hiệp x 12 lần",
+                        video: "IZxyjW7MPJQ",
+                        weightNam: "30kg - 45kg",
+                        weightNu: "15kg - 25kg",
+                        setup: ["Chỉnh ghế sao cho hông thoải mái.", "Bàn chân đặt rộng bằng vai trên bàn đạp.", "Mông và lưng áp sát ghế suốt quá trình."],
+                        action: ["Đẩy mạnh gót chân đẩy bàn đạp ra (không khóa gối).", "Hạ tạ xuống từ từ hướng về phía ngực.", "Dừng lại khi đùi và cẳng chân tạo góc 90 độ."],
+                        breath: "TRONG KHI hạ tạ: Hít vào sâu bằng mũi. KHI ĐẨY mạnh: Thở mạnh bằng miệng.",
+                        ptNote: "Giữ 2-3 lần lặp dự trữ, chưa cần cố đẩy nặng."
                     },
                     {
-                        name: "Máy Đá Đùi Trước", tech: "Leg Extension Machine", sets: "3 hiệp x 15 lần", video: "m0GWpX1S-R0",
-                        setup: "Chỉnh đệm chân nằm ngay trên cổ chân. Lưng áp sát vào ghế.",
-                        action: "Đá chân lên thẳng, siết cứng cơ đùi trước 1 giây.",
-                        breath: "Đá lên: Thở ra. Hạ xuống: Hít vào.",
-                        ptNote: "Không dùng đà để lăng chân. Hãy dùng cơ đùi để nâng."
+                        name: "Máy Đá Đùi Trước",
+                        tech: "Leg Extension Machine",
+                        sets: "2 hiệp x 12 lần",
+                        video: "m0GWpX1S-R0",
+                        weightNam: "15kg - 22kg",
+                        weightNu: "8kg - 12kg",
+                        setup: ["Ngồi thẳng, tựa sát ghế.", "Đệm chân nằm ngay trên cổ chân."],
+                        action: ["Dùng đùi đá chân lên cao thẳng.", "Siết cứng cơ đùi ở đỉnh 1 giây.", "Hạ chân xuống thật chậm và kiểm soát."],
+                        breath: "TRONG KHI hạ chân: Hít vào bằng mũi. KHI ĐÁ lên: Thở mạnh bằng miệng.",
+                        ptNote: "Nếu gối khó chịu, giảm tạ ngay 10-20%."
                     },
                     {
-                        name: "Máy Móc Đùi Sau", tech: "Seated Leg Curl", sets: "3 hiệp x 15 lần", video: "1Tq3Qd6ndaw",
-                        setup: "Chỉnh đệm chân phía sau cổ chân. Cố định đùi bằng thanh chặn trên.",
-                        action: "Cuộn chân xuống dưới, cảm nhận sự co bóp của cơ đùi sau.",
-                        breath: "Cuộn xuống: Thở ra. Thả lên: Hít vào.",
-                        ptNote: "Giữ mũi chân hướng lên trên để tác động sâu hơn vào bắp đùi."
+                        name: "Máy Móc Đùi Sau",
+                        tech: "Seated Leg Curl",
+                        sets: "2 hiệp x 12 lần",
+                        video: "1Tq3Qd6ndaw",
+                        weightNam: "12kg - 20kg",
+                        weightNu: "6kg - 10kg",
+                        setup: ["Chỉnh đệm chân sau cổ chân.", "Cố định đùi bằng thanh chặn trên."],
+                        action: ["Cuộn chân xuống dưới mông hết cỡ.", "Siết đùi sau ở điểm thấp nhất.", "Nhả lên chậm để giãn cơ."],
+                        breath: "TRONG KHI nhả chân lên: Hít vào bằng mũi. KHI CUỘN chân: Thở mạnh bằng miệng.",
+                        ptNote: "Không dùng đà, giữ tốc độ đều để bảo vệ gối."
                     },
                     {
-                        name: "Máy Đi Bộ Dốc", tech: "Incline Treadmill", sets: "15 phút", video: "7IIDmXNoZsc",
-                        setup: "Chỉnh độ dốc (Incline) mức 6-10. Tốc độ 4.5 - 5.5.",
-                        action: "Đi bộ sải bước dài, đánh tay tự nhiên. Không nắm vào thành máy.",
-                        breath: "Hít thở sâu nhịp nhàng theo bước chân.",
-                        ptNote: "Đi bộ dốc đốt calo gấp 2 lần chạy bộ bằng phẳng và bảo vệ khớp gối."
+                        name: "Đi bộ dốc (Cardio)",
+                        tech: "Incline Treadmill",
+                        sets: "12 phút",
+                        video: "7IIDmXNoZsc",
+                        weightNam: "Dốc 4 - Tốc độ 4.6",
+                        weightNu: "Dốc 4 - Tốc độ 4.2",
+                        setup: ["Chỉnh độ dốc máy chạy.", "Không vịn tay vào thành máy."],
+                        action: ["Đi bước dài, đánh tay tự nhiên.", "Duy trì nhịp tim ổn định và liên tục."],
+                        breath: "Hít sâu bằng mũi 3 nhịp bước - Thở sạch miệng 3 nhịp bước.",
+                        ptNote: "Cardio nhẹ để làm mát và tăng tiêu hao vừa phải."
                     }
                 ]
             },
             2: {
-                title: "Buổi 2: Thân trên (Đẩy & Kéo Máy)",
+                title: "Thứ 3: Đẩy & Kéo (Săn chắc thân trên)",
+                goal: "Ưu tiên kỹ thuật và nhịp thở ổn định",
+                duration: "45-50 phút",
+                rpe: "5-6/10",
+                rest: "75-90 giây",
                 exercises: [
                     {
-                        name: "Máy Đẩy Ngực Ngang", tech: "Chest Press Machine", sets: "4 hiệp x 12 lần", video: "xZ9U6GAnR08",
-                        setup: "Ghế chỉnh sao cho tay cầm ngang giữa ngực. Vai ép sát lưng ghế.",
-                        action: "Đẩy thẳng ra trước, ép cơ ngực. Hạ về chậm.",
-                        breath: "Đẩy: Thở ra. Hạ: Hít vào.",
-                        ptNote: "Lỗi phổ biến: Rướn vai ra trước. Hãy giữ vai cố định phía sau suốt bài."
+                        name: "Máy Kéo Xô Dọc",
+                        tech: "Lat Pulldown Machine",
+                        sets: "3 hiệp x 10 lần",
+                        video: "CAwf7n6Luuc",
+                        weightNam: "22kg - 32kg",
+                        weightNu: "10kg - 18kg",
+                        setup: ["Tay cầm rộng hơn vai.", "Chốt đùi chặt. Ngả người sau 10 độ."],
+                        action: ["Kéo thanh đòn xuống sát ngực trên.", "Ép chặt bả vai sau 1 giây.", "Thả lên thật chậm cảm nhận cơ xô giãn."],
+                        breath: "TRONG KHI thả tạ lên: Hít vào bằng mũi. KHI KÉO xuống: Thở mạnh bằng miệng.",
+                        ptNote: "Tập trung cơ lưng, không kéo giật bằng tay trước."
                     },
                     {
-                        name: "Máy Kéo Xô", tech: "Lat Pulldown", sets: "4 hiệp x 12 lần", video: "CAwf7n6Luuc",
-                        setup: "Tay cầm rộng hơn vai. Ngồi thẳng người, hơi ngả lưng 10 độ.",
-                        action: "Kéo thanh đòn về phía ngực trên, cảm nhận 2 xương bả vai ép vào nhau.",
-                        breath: "Kéo xuống: Thở ra. Thả lên: Hít vào.",
-                        ptNote: "Không dùng lực bắp tay quá nhiều. Hãy tưởng tượng khuỷu tay đang kéo tạ xuống."
+                        name: "Máy Đẩy Ngực Ngang",
+                        tech: "Chest Press Machine",
+                        sets: "3 hiệp x 10 lần",
+                        video: "xZ9U6GAnR08",
+                        weightNam: "18kg - 26kg",
+                        weightNu: "6kg - 10kg",
+                        setup: ["Tay cầm ngang ngực.", "Ưỡn nhẹ ngực, vai ép sát ghế."],
+                        action: ["Đẩy mạnh tay cầm ra trước (không khóa khuỷu).", "Hạ về thật chậm để giãn ngực."],
+                        breath: "TRONG KHI hạ tạ về: Hít vào bằng mũi. KHI ĐẨY mạnh ra: Thở mạnh bằng miệng.",
+                        ptNote: "Giữ form ổn định, không rướn vai theo tạ."
                     },
                     {
-                        name: "Máy Đẩy Vai", tech: "Shoulder Press Machine", sets: "3 hiệp x 12 lần", video: "WvLMauqrnK8",
-                        setup: "Lưng dựa thẳng, tay cầm chắc chắn.",
-                        action: "Đẩy tạ thẳng lên cao, giữ cơ bụng chắc.",
-                        breath: "Đẩy lên: Thở ra. Hạ xuống: Hít vào.",
-                        ptNote: "Hạ tạ đến khi tay ngang tai là dừng, đừng hạ quá sâu gây chấn thương vai."
+                        name: "Máy Đẩy Vai Ngồi",
+                        tech: "Shoulder Press Machine",
+                        sets: "2 hiệp x 10-12 lần",
+                        video: "WvLMauqrnK8",
+                        weightNam: "8kg - 14kg",
+                        weightNu: "3kg - 6kg",
+                        setup: ["Dựa thẳng lưng vào ghế.", "Cùi chỏ hướng hơi về trước."],
+                        action: ["Đẩy tạ thẳng lên trên đầu.", "Hạ xuống đến ngang tai rồi đẩy tiếp."],
+                        breath: "TRONG KHI hạ tạ xuống: Hít vào bằng mũi. KHI ĐẨY tạ lên: Thở mạnh bằng miệng.",
+                        ptNote: "Vai nhạy cảm thì giảm tạ, vẫn giữ biên độ an toàn."
                     },
                     {
-                        name: "Máy Chèo Thuyền", tech: "Seated Cable Row", sets: "3 hiệp x 15 lần", video: "GZbfZ033f74",
-                        setup: "Chân đặt trên bàn đạp, hơi chùng gối. Lưng thẳng.",
-                        action: "Kéo tay cầm về phía rốn, ưỡn ngực ra trước.",
-                        breath: "Kéo về: Thở ra. Thả ra: Hít vào.",
-                        ptNote: "Không rung lắc lưng. Lưng phải cố định như một bức tường."
+                        name: "Máy Chèo Thuyền Cáp",
+                        tech: "Seated Cable Row",
+                        sets: "2 hiệp x 12 lần",
+                        video: "GZbfZ033f74",
+                        weightNam: "18kg - 26kg",
+                        weightNu: "8kg - 14kg",
+                        setup: ["Ngồi thẳng, gối hơi chùng.", "Tay cầm chữ V, ngực ưỡn."],
+                        action: ["Kéo cáp về phía rốn.", "Ép bả vai chặt ở điểm cuối.", "Nhả cáp ra chậm."],
+                        breath: "TRONG KHI thả cáp ra xa: Hít vào bằng mũi. KHI KÉO về: Thở mạnh bằng miệng.",
+                        ptNote: "Lưng đứng yên, không đung đưa theo tạ."
                     }
                 ]
             },
             3: {
-                title: "Buổi 3: Thân dưới & Cơ bụng (Máy cô lập)",
+                title: "Thứ 5: Thân dưới & Cardio toàn thân",
+                goal: "Đốt năng lượng vừa phải, tránh quá tải khớp",
+                duration: "45-50 phút",
+                rpe: "5-6/10",
+                rest: "75-90 giây",
                 exercises: [
                     {
-                        name: "Máy Ép Đùi Trong/Ngoài", tech: "Adductor/Abductor Machine", sets: "4 hiệp x 20 lần", video: "r2O99XkG7pA",
-                        setup: "Ngồi thẳng, chỉnh máy vào chế độ ép đùi trong hoặc mở đùi ngoài.",
-                        action: "Thực hiện động tác mở/đóng chân dứt khoát.",
-                        breath: "Khi dùng lực ép/mở: Thở ra. Khi nhả về: Hít vào.",
-                        ptNote: "Bài tập cực tốt để săn chắc vùng đùi, đặc biệt cho nữ giới."
+                        name: "Máy Gánh Tạ Smith (Squat)",
+                        tech: "Smith Machine Squat",
+                        sets: "3 hiệp x 10-12 lần",
+                        video: "P68WfS7Yn_I",
+                        weightNam: "7.5kg - 12.5kg (mỗi bên)",
+                        weightNu: "2.5kg - 4kg (mỗi bên)",
+                        setup: ["Thanh đòn trên cầu vai. Chân rộng bằng vai.", "Hơi bước chân lên trước so với thanh đòn."],
+                        action: ["Hạ mông xuống chậm, lưng thẳng.", "Hạ đến khi đùi song song sàn.", "Đẩy mạnh gót đứng dậy."],
+                        breath: "TRONG KHI hạ người xuống: Hít thật sâu. KHI ĐỨNG dậy: Thở mạnh bằng miệng.",
+                        ptNote: "Ưu tiên kiểm soát chuyển động hơn mức tạ."
                     },
                     {
-                        name: "Máy Gánh Tạ (Smith)", tech: "Smith Machine Squat", sets: "3 hiệp x 15 lần", video: "P68WfS7Yn_I",
-                        setup: "Đặt thanh đòn lên phần cơ cầu vai (không đặt lên xương cổ). Chân bước về trước 1 chút.",
-                        action: "Hạ mông xuống như ngồi ghế, giữ lưng thẳng tuyệt đối.",
-                        breath: "Xuống: Hít sâu. Lên: Thở mạnh.",
-                        ptNote: "Máy Smith hỗ trợ giữ thăng bằng nên bạn có thể tập trung hoàn toàn vào đùi và mông."
+                        name: "Máy Ép Đùi Trong",
+                        tech: "Adductor Machine",
+                        sets: "2 hiệp x 15 lần",
+                        video: "r2O99XkG7pA",
+                        weightNam: "18kg - 28kg",
+                        weightNu: "10kg - 16kg",
+                        setup: ["Ngồi thẳng, mở chân rộng nhất có thể."],
+                        action: ["Ép sát hai chân lại với nhau.", "Giữ 1 giây ở điểm khép.", "Nhả về chậm chủ động."],
+                        breath: "TRONG KHI nhả chân mở ra: Hít vào. KHI ÉP chân vào: Thở ra mạnh.",
+                        ptNote: "Bài bổ trợ, không cần tập tới rát cơ quá mức."
                     },
                     {
-                        name: "Máy Gập Bụng", tech: "Abdominal Machine", sets: "4 hiệp x 20 lần", video: "S_U_Y-y3FmU",
-                        setup: "Ngồi vào máy, cố định chân và tay cầm.",
-                        action: "Dùng cơ bụng cuộn tròn người lại. Đừng dùng lực tay kéo.",
-                        breath: "Cuộn người: Thở ra. Nhả ra: Hít vào.",
-                        ptNote: "Làm chậm. Cảm nhận từng múi bụng đang co bóp."
+                        name: "Máy Gập Bụng",
+                        tech: "Ab Crunch Machine",
+                        sets: "2 hiệp x 12-15 lần",
+                        video: "S_U_Y-y3FmU",
+                        weightNam: "15kg - 25kg",
+                        weightNu: "8kg - 15kg",
+                        setup: ["Ngồi vững, tay nắm hờ cần gạt."],
+                        action: ["Dùng cơ bụng cuộn người lại.", "Siết chặt bụng 1 giây.", "Nhả lên chậm."],
+                        breath: "TRONG KHI nhả người lên: Hít vào. KHI CUỘN xuống: Thở sạch hơi ra.",
+                        ptNote: "Không gồng cổ quá mức để tránh mỏi cổ."
                     },
                     {
-                        name: "Máy Elliptical (Trượt tuyết)", tech: "Elliptical Machine", sets: "20 phút", video: "nmwgirgXLYM",
-                        setup: "Chỉnh mức kháng lực (Resistance) trung bình.",
-                        action: "Vận động cả tay và chân. Giữ lưng thẳng.",
-                        breath: "Hít thở sâu và đều.",
-                        ptNote: "Đây là máy đốt mỡ toàn thân mà không gây áp lực lên khớp gối."
+                        name: "Máy Trượt Tuyết (Cardio)",
+                        tech: "Elliptical Machine",
+                        sets: "15 phút",
+                        video: "nmwgirgXLYM",
+                        weightNam: "Level 4 - 6",
+                        weightNu: "Level 3 - 5",
+                        setup: ["Đứng lên bàn đạp, tay nắm thanh điều khiển.", "Lưng thẳng, mắt nhìn thẳng."],
+                        action: ["Vận động chân theo nhịp elip liên tục.", "Phối hợp đẩy kéo tay nhịp nhàng.", "Giữ nhịp độ ổn định."],
+                        breath: "Hít sâu đều đặn theo nhịp chuyển động của máy.",
+                        ptNote: "Đi đều nhịp, chưa cần đẩy tốc độ cao."
                     }
                 ]
             },
             4: {
-                title: "Buổi 4: Vai, Tay & Ngực (Cables focus)",
+                title: "Thứ 6: Cable Mastery (Săn chắc chi tiết)",
+                goal: "Rèn kỹ thuật nhóm cơ tay-ngực với tạ nhẹ",
+                duration: "40-50 phút",
+                rpe: "5-6/10",
+                rest: "75-90 giây",
                 exercises: [
                     {
-                        name: "Máy Ép Ngực", tech: "Pec Deck / Butterfly Machine", sets: "3 hiệp x 15 lần", video: "O7vj_9SjG3s",
-                        setup: "Ngồi thẳng, tay cầm ngang vai. Khuỷu tay hơi cong.",
-                        action: "Ép 2 tay vào nhau trước mặt, siết chặt ngực 1 giây.",
-                        breath: "Ép vào: Thở ra. Mở ra: Hít vào.",
-                        ptNote: "Cảm nhận sự căng giãn của cơ ngực khi mở tay ra hết cỡ."
+                        name: "Ép Ngực Butterfly",
+                        tech: "Pec Deck Machine",
+                        sets: "2 hiệp x 12 lần",
+                        video: "O7vj_9SjG3s",
+                        weightNam: "18kg - 26kg",
+                        weightNu: "8kg - 12kg",
+                        setup: ["Tay cầm ngang vai.", "Lưng và vai áp sát ghế."],
+                        action: ["Ép hai tay vào nhau trước mặt.", "Siết ngực 1 giây ở giữa.", "Mở ra chậm rãi."],
+                        breath: "TRONG KHI mở rộng tay: Hít vào sâu. KHI ÉP vào: Thở mạnh miệng.",
+                        ptNote: "Tập nhịp chậm để cảm nhận cơ ngực tốt hơn."
                     },
                     {
-                        name: "Nhấn Cáp Sau Tay", tech: "Cable Tricep Pushdown", sets: "3 hiệp x 15 lần", video: "2-LAMp_qU20",
-                        setup: "Đứng thẳng, tay cầm thanh ngang hoặc dây thừng. Khuỷu tay sát sườn.",
-                        action: "Nhấn cáp xuống đến khi tay thẳng hoàn toàn.",
-                        breath: "Nhấn xuống: Thở ra. Nhả lên: Hít vào.",
-                        ptNote: "Giữ khuỷu tay cố định, không để nó di chuyển lên xuống."
+                        name: "Nhấn Cáp Tay Sau",
+                        tech: "Cable Tricep Pushdown",
+                        sets: "2 hiệp x 12 lần",
+                        video: "2-LAMp_qU20",
+                        weightNam: "8kg - 14kg",
+                        weightNu: "4kg - 8kg",
+                        setup: ["Khuỷu tay ép sát sườn.", "Hơi đổ người trước 15 độ."],
+                        action: ["Nhấn cáp xuống đến khi tay thẳng.", "Siết bắp tay sau 1 giây.", "Nhả lên chậm kiểm soát."],
+                        breath: "TRONG KHI nhả tay lên: Hít vào. KHI NHẤN xuống: Thở mạnh miệng.",
+                        ptNote: "Không cần nặng, giữ khuỷu cố định là đủ hiệu quả."
                     },
                     {
-                        name: "Cuốn Cáp Tay Trước", tech: "Cable Bicep Curl", sets: "3 hiệp x 15 lần", video: "AsAW-X7U0I0",
-                        setup: "Đứng thẳng, cầm thanh cáp ở mức thấp nhất.",
-                        action: "Cuốn cáp lên phía vai, giữ thân người cố định.",
-                        breath: "Cuốn lên: Thở ra. Hạ xuống: Hít vào.",
-                        ptNote: "Không dùng đà của lưng để nhăng tạ. Chỉ dùng bắp tay."
+                        name: "Cuốn Cáp Tay Trước",
+                        tech: "Cable Bicep Curl",
+                        sets: "2 hiệp x 12 lần",
+                        video: "AsAW-X7U0I0",
+                        weightNam: "6kg - 12kg",
+                        weightNu: "3kg - 6kg",
+                        setup: ["Đứng thẳng, tay cầm cáp thấp nhất.", "Khuỷu tay sát sườn."],
+                        action: ["Cuốn cáp lên phía vai.", "Hạ xuống thật chậm."],
+                        breath: "TRONG KHI hạ cáp xuống: Hít vào. KHI CUỐN lên: Thở mạnh miệng.",
+                        ptNote: "Không ngả lưng ra sau lấy đà."
                     },
                     {
-                        name: "Máy Chèo Thuyền (Cardio)", tech: "Rowing Machine", sets: "10 phút", video: "nmwgirgXLYM",
-                        setup: "Chỉnh mức kháng lực 5-7.",
-                        action: "Dùng chân đạp mạnh trước, sau đó mới dùng tay kéo.",
-                        breath: "Kéo: Thở ra. Nhả: Hít vào.",
-                        ptNote: "Máy này sử dụng 85% cơ bắp trên cơ thể. Cực kỳ mệt nhưng đốt mỡ rất nhanh."
+                        name: "Máy Chèo Thuyền (Cardio)",
+                        tech: "Rowing Machine",
+                        sets: "8 phút",
+                        video: "nmwgirgXLYM",
+                        weightNam: "Level 4 - 5",
+                        weightNu: "Level 3 - 4",
+                        setup: ["Ngồi thẳng, chân đặt vững.", "Cầm thanh kéo ngang rốn."],
+                        action: ["Đạp chân mạnh vừa phải trước, kéo tay sau.", "Duy trì nhịp độ ổn định."],
+                        breath: "Hít sâu khi nhả người - Thở mạnh khi kéo về.",
+                        ptNote: "Chỉ cardio nhẹ, không cần kéo tốc độ cao."
                     }
                 ]
             },
             5: {
-                title: "Buổi 5: Full Body Circuit (Vòng lặp máy)",
+                title: "Thứ 7: Full Body Circuit & Về đích",
+                goal: "Buổi nhẹ tùy chọn để hoàn tất tuần",
+                duration: "35-45 phút",
+                rpe: "5/10",
+                rest: "75 giây",
                 exercises: [
                     {
-                        name: "Đạp đùi máy", tech: "Leg Press", sets: "3 hiệp x 15 lần", video: "IZxyjW7MPJQ",
-                        setup: "Thực hiện như buổi 1 nhưng nghỉ ngắn hơn (30s).",
-                        action: "Liên tục và nhịp nhàng.",
-                        breath: "Hít thở sâu.",
-                        ptNote: "Giữ nhịp tim cao để đốt mỡ."
+                        name: "Máy Đạp Đùi (Tốc độ)",
+                        tech: "Leg Press",
+                        sets: "2 hiệp x 15 lần",
+                        video: "IZxyjW7MPJQ",
+                        weightNam: "25kg - 35kg",
+                        weightNu: "12kg - 20kg",
+                        setup: ["Tư thế chuẩn như Buổi 1."],
+                        action: ["Thực hiện nhịp nhàng liên tục.", "Nghỉ ngắn 45-60 giây giữa hiệp."],
+                        breath: "Duy trì hít thở đều nhịp nhàng.",
+                        ptNote: "Mục tiêu duy trì vận động, không phải buổi nặng."
                     },
                     {
-                        name: "Kéo xô máy", tech: "Lat Pulldown", sets: "3 hiệp x 12 lần", video: "CAwf7n6Luuc",
-                        setup: "Giữ tư thế chuẩn, tập trung cơ xô.",
-                        action: "Kéo nhanh, nhả chậm.",
-                        breath: "Thở đều.",
-                        ptNote: "Đừng để mỏi tay, hãy dùng lưng."
+                        name: "Máy Kéo Xô",
+                        tech: "Lat Pulldown",
+                        sets: "2 hiệp x 12 lần",
+                        video: "CAwf7n6Luuc",
+                        weightNam: "20kg - 28kg",
+                        weightNu: "10kg - 14kg",
+                        setup: ["Tư thế chuẩn như Buổi 2."],
+                        action: ["Kéo dứt khoát vừa sức.", "Thả lên chậm."],
+                        breath: "Kéo xuống thở ra, thả lên hít vào.",
+                        ptNote: "Nếu lưng còn mỏi sâu, có thể bỏ bài này để nghỉ."
                     },
                     {
-                        name: "Đẩy vai máy", tech: "Shoulder Press", sets: "3 hiệp x 12 lần", video: "WvLMauqrnK8",
-                        setup: "Kiểm soát tạ tốt.",
-                        action: "Đẩy dứt khoát.",
-                        breath: "Thở mạnh khi đẩy.",
-                        ptNote: "Cảm nhận vai nóng rát là thành công."
+                        name: "Máy Đẩy Ngực",
+                        tech: "Chest Press",
+                        sets: "2 hiệp x 12 lần",
+                        video: "xZ9U6GAnR08",
+                        weightNam: "15kg - 22kg",
+                        weightNu: "6kg - 10kg",
+                        setup: ["Tư thế chuẩn như Buổi 2."],
+                        action: ["Đẩy dứt khoát.", "Hạ về chậm."],
+                        breath: "Đẩy ra thở ra, hạ về hít vào.",
+                        ptNote: "Không cố đạt PR trong buổi tùy chọn."
                     },
                     {
-                        name: "Leo cầu thang máy", tech: "Stairmaster", sets: "15 phút", video: "7IIDmXNoZsc",
-                        setup: "Tốc độ vừa phải.",
-                        action: "Bước từng bước vững chắc. Không nắm tay quá chặt vào thành.",
-                        breath: "Hít thở sâu.",
-                        ptNote: "Vua của các máy đốt mỡ. Hãy cố gắng không bỏ cuộc!"
+                        name: "Máy Leo Cầu Thang",
+                        tech: "Stairmaster",
+                        sets: "12 phút",
+                        video: "7IIDmXNoZsc",
+                        weightNam: "Level 4 - 5",
+                        weightNu: "Level 3 - 4",
+                        setup: ["Người thẳng, mắt nhìn thẳng.", "Bước vững gót chân."],
+                        action: ["Leo liên tục không nghỉ dài.", "Giữ nhịp tim ở vùng đốt mỡ nhẹ."],
+                        breath: "Duy trì nhịp thở ổn định 2-2.",
+                        ptNote: "Kết tuần nhẹ nhàng, không ép nhịp tim quá cao."
                     }
                 ]
             }
         };
 
+        function setActiveTab(activeId) {
+            document.querySelectorAll('nav button').forEach((button) => button.classList.remove('tab-active'));
+            document.getElementById(activeId).classList.add('tab-active');
+        }
+
+        function renderGuide() {
+            let html = `
+                <div class="bg-white rounded-3xl p-5 md:p-6 border border-[var(--line)] mb-5">
+                    <h2 class="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900">Trang Hướng Dẫn Chung</h2>
+                    <p class="text-sm text-slate-600 mt-2">Phần này chứa toàn bộ nguyên tắc chung, không lặp lại trong từng buổi tập chi tiết.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <article class="lift-card bg-white rounded-3xl p-4 md:p-5">
+                        <p class="font-semibold text-slate-900 mb-2"><i class="fas fa-calendar-alt text-[var(--accent)] mr-2"></i>Lịch tập đề xuất</p>
+                        <p class="text-sm text-slate-700">${generalGuide.schedule}</p>
+                    </article>
+
+                    <article class="lift-card bg-white rounded-3xl p-4 md:p-5">
+                        <p class="font-semibold text-slate-900 mb-2"><i class="fas fa-dumbbell text-[var(--accent)] mr-2"></i>Nguyên tắc tập nhẹ cho người mới</p>
+                        <ul class="text-sm text-slate-700 space-y-1">
+                            ${generalGuide.rules.map((rule) => `<li>• ${rule}</li>`).join('')}
+                        </ul>
+                    </article>
+
+                    <article class="lift-card bg-white rounded-3xl p-4 md:p-5">
+                        <p class="font-semibold text-slate-900 mb-2"><i class="fas fa-fire text-[var(--accent)] mr-2"></i>Khởi động trước buổi tập</p>
+                        <ul class="text-sm text-slate-700 space-y-1">
+                            ${generalGuide.warmup.map((step) => `<li>• ${step}</li>`).join('')}
+                        </ul>
+                    </article>
+                </div>
+            `;
+
+            document.getElementById('workout-content').innerHTML = html;
+        }
+
+        function switchView(view) {
+            if (view === 'guide') {
+                setActiveTab('tab-guide');
+                renderGuide();
+            }
+        }
+
         function switchDay(day) {
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('tab-active'));
-            document.getElementById(`tab-${day}`).classList.add('tab-active');
+            setActiveTab(`tab-${day}`);
 
             const data = workoutData[day];
             let html = `
-                <div class="bg-white rounded-3xl p-8 shadow-sm mb-8 border border-slate-100">
-                    <div class="flex items-center gap-3 mb-2">
-                        <span class="w-10 h-1 text-red-500 bg-red-500 rounded-full"></span>
-                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Workout Routine</span>
+                <div class="bg-white rounded-3xl p-5 md:p-6 border border-[var(--line)] mb-5">
+                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                        <span class="text-[11px] font-semibold px-3 py-1 rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">${data.goal}</span>
+                        <span class="text-[11px] font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700"><i class="fas fa-clock mr-1"></i>${data.duration}</span>
+                        <span class="text-[11px] font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700"><i class="fas fa-fire mr-1"></i>${data.rpe}</span>
+                        <span class="text-[11px] font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700"><i class="fas fa-hourglass-half mr-1"></i>${data.rest}</span>
                     </div>
-                    <h2 class="text-2xl font-extrabold text-slate-800 leading-tight uppercase italic">${data.title}</h2>
-                    <p class="text-sm text-slate-500 mt-2 font-medium">Nghỉ giữa hiệp: <span class="text-red-600 font-bold">45 giây</span> (Dành cho giảm cân)</p>
+                    <h2 class="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900">${data.title}</h2>
                 </div>
-                <div class="space-y-6">
+                <div class="space-y-4">
             `;
 
-            data.exercises.forEach((ex, i) => {
+            data.exercises.forEach((ex, index) => {
                 html += `
-                    <div class="machine-card bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
-                        <div class="bg-slate-900 p-5 flex justify-between items-center">
-                            <div class="flex items-center gap-4">
-                                <span class="text-2xl font-black text-red-500/50 italic">0${i+1}</span>
-                                <div>
-                                    <h4 class="font-bold text-white uppercase text-sm tracking-wide">${ex.name}</h4>
-                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">${ex.tech}</p>
-                                </div>
+                    <article class="lift-card bg-white rounded-3xl p-4 md:p-5">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <p class="text-[11px] font-semibold tracking-wide text-[var(--muted)]">Bài ${index + 1} • ${ex.tech}</p>
+                                <h3 class="text-base md:text-lg font-extrabold text-slate-900 mt-1">${ex.name}</h3>
+                                <p class="text-sm font-semibold text-[var(--accent)] mt-1">${ex.sets}</p>
                             </div>
-                            <button onclick="openModal('${ex.name}', '${ex.video}')" class="w-12 h-12 bg-red-600 text-white rounded-2xl flex items-center justify-center hover:bg-red-500 transition-colors shadow-lg shadow-red-900/20">
+                            <button onclick="openModal('${ex.name}', '${ex.video}')" aria-label="Mở video ${ex.name}" class="w-10 h-10 shrink-0 bg-[var(--accent)] text-white rounded-xl flex items-center justify-center hover:opacity-90 transition-opacity">
                                 <i class="fas fa-play text-xs"></i>
                             </button>
                         </div>
-                        
-                        <div class="p-6">
-                            <div class="inline-flex items-center bg-red-50 text-red-600 text-[11px] px-4 py-1.5 rounded-full font-black border border-red-100 mb-6 uppercase italic">
-                                <i class="fas fa-redo-alt mr-2"></i> ${ex.sets}
+
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="rounded-2xl border border-[var(--line)] bg-slate-50 p-3">
+                                <p class="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-1">Nam</p>
+                                <p class="text-sm font-bold text-slate-900">${ex.weightNam}</p>
                             </div>
-
-                            <div class="space-y-5">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                                        <h5 class="text-[9px] font-black text-slate-400 uppercase mb-2 tracking-[0.2em] flex items-center">
-                                            <i class="fas fa-tools mr-2 text-red-500"></i> Setup & Thực hiện
-                                        </h5>
-                                        <p class="text-xs text-slate-700 leading-relaxed"><strong>Chuẩn bị:</strong> ${ex.setup}</p>
-                                        <p class="text-xs text-slate-700 leading-relaxed mt-2"><strong>Chuyển động:</strong> ${ex.action}</p>
-                                    </div>
-                                    <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100">
-                                        <h5 class="text-[9px] font-black text-blue-500 uppercase mb-2 tracking-[0.2em] flex items-center">
-                                            <i class="fas fa-wind mr-2"></i> Kỹ thuật thở
-                                        </h5>
-                                        <p class="text-xs text-blue-800 font-bold leading-relaxed">${ex.breath}</p>
-                                    </div>
-                                </div>
-
-                                <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100">
-                                    <h5 class="text-[9px] font-black text-amber-600 uppercase mb-1 tracking-[0.2em] flex items-center">
-                                        <i class="fas fa-user-shield mr-2"></i> Lời khuyên PT
-                                    </h5>
-                                    <p class="text-xs text-amber-900 italic font-medium leading-relaxed">${ex.ptNote}</p>
-                                </div>
+                            <div class="rounded-2xl border border-[var(--line)] bg-slate-50 p-3">
+                                <p class="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-1">Nữ</p>
+                                <p class="text-sm font-bold text-slate-900">${ex.weightNu}</p>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm leading-relaxed">
+                            <div>
+                                <p class="font-semibold text-slate-900 mb-1"><i class="fas fa-sliders-h text-[var(--accent)] mr-1"></i>Setup</p>
+                                <ul class="text-slate-600 space-y-1">
+                                    ${ex.setup.map((item) => `<li>• ${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-slate-900 mb-1"><i class="fas fa-forward text-[var(--accent)] mr-1"></i>Thực hiện</p>
+                                <ul class="text-slate-600 space-y-1">
+                                    ${ex.action.map((item) => `<li>• ${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="rounded-2xl bg-blue-50 border border-blue-100 p-3">
+                                <p class="text-[11px] font-semibold uppercase tracking-wide text-blue-600 mb-1">Nhịp thở</p>
+                                <p class="text-sm text-blue-900">${ex.breath}</p>
+                            </div>
+                            <div class="rounded-2xl bg-amber-50 border border-amber-100 p-3">
+                                <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-600 mb-1">Lưu ý PT</p>
+                                <p class="text-sm text-amber-900">${ex.ptNote}</p>
+                            </div>
+                        </div>
+                    </article>
                 `;
             });
-            
-            html += `</div>`;
+
+            html += `
+                <article class="lift-card bg-white rounded-3xl p-4 md:p-5">
+                    <p class="font-semibold text-slate-900 mb-2"><i class="fas fa-spa text-[var(--accent)] mr-2"></i>Giãn cơ cuối buổi (5-7 phút)</p>
+                    <ul class="text-sm text-slate-700 space-y-1">
+                        ${stretchGuide.map((item) => `<li>• ${item}</li>`).join('')}
+                    </ul>
+                </article>
+            `;
+
             document.getElementById('workout-content').innerHTML = html;
         }
 
         function openModal(title, videoId) {
             document.getElementById('modalTitle').innerText = title;
-            document.getElementById('youtubeIframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            document.getElementById('youtubeIframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
             document.getElementById('videoModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            document.getElementById('youtubeIframe').src = "";
+            document.getElementById('youtubeIframe').src = '';
             document.getElementById('videoModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
 
-        window.onload = () => switchDay(1);
+        window.onload = () => switchView('guide');
     </script>
 </body>
 </html>
