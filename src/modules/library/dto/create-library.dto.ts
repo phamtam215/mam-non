@@ -19,6 +19,11 @@ export class CreateLibraryDto {
   @IsNotEmpty({ message: 'Vui lòng nhập đường dẫn video' })
   videoUrl?: string
 
+  @ApiPropertyOptional({ example: 'https://example.com/thumbnail.jpg' })
+  @IsOptional()
+  @IsString()
+  thumbnailUrl?: string
+
   @ApiProperty({ example: '2026-04-02T00:00:00.000Z' })
   @IsDateString({}, { message: 'Ngày không hợp lệ' })
   @IsNotEmpty({ message: 'Vui lòng nhập ngày' })

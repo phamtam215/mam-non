@@ -36,10 +36,11 @@ model Post {
 // -----------------------------------------
 model Library {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  type      LibraryType // IMAGE hoặc VIDEO
-  imageUrl  String?     // Đường dẫn ảnh (khi type = IMAGE)
-  videoUrl  String?     // Đường dẫn video (khi type = VIDEO)
-  date      DateTime    // Ngày
+  type         LibraryType // IMAGE hoặc VIDEO
+  imageUrl     String?     // Đường dẫn ảnh (khi type = IMAGE)
+  videoUrl     String?     // Đường dẫn video (khi type = VIDEO)
+  thumbnailUrl String?     // Ảnh thu nhỏ (thumbnail)
+  date         DateTime    // Ngày
   title     String      // Tiêu đề
   createdAt DateTime    @default(now())
 }
