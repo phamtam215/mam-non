@@ -9,7 +9,10 @@ export class ContactService {
   // Phụ huynh gửi form
   async create(createContactDto: CreateContactDto) {
     return this.prisma.contact.create({
-      data: createContactDto
+      data: {
+        ...createContactDto,
+        message: createContactDto.message ?? ''
+      }
     })
   }
 
