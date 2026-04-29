@@ -71,8 +71,8 @@ export class LibraryController {
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({
-            maxSize: 2 * 1024 * 1024,
-            message: 'Ảnh tối đa 2MB'
+            maxSize: 10 * 1024 * 1024,
+            message: 'Ảnh tối đa 10MB'
           }),
           new FileTypeValidator({ fileType: /^image\/(jpeg|png|webp)$/ })
         ]

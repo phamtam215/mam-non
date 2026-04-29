@@ -8,7 +8,7 @@ import { UploadService } from './upload.service'
     // Dùng memoryStorage để Sharp đọc buffer trước khi lưu (không tạo file tạm)
     MulterModule.register({
       storage: memoryStorage(),
-      limits: { fileSize: 2 * 1024 * 1024 } // Tối đa 2MB
+      limits: { fileSize: 10 * 1024 * 1024 } // Tối đa 10MB
     })
   ],
   providers: [UploadService],
