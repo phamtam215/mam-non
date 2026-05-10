@@ -10,22 +10,6 @@
     {
       "src": "/api/(.*)",
       "dest": "server.js"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "server.js"
-    },
-    {
-      "src": "/images/(.*)",
-      "dest": "server.js"
-    },
-    {
-      "src": "/frontend/(.*)",
-      "dest": "server.js"
-    },
-    {
-      "src": "/",
-      "dest": "server.js"
     }
   ]
 }
