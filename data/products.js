@@ -1,6 +1,6 @@
 const seedProducts = [
   {
-    name: 'Cá Bò Khô Đà Nẵng',
+    name: 'Cá Bò Khô',
     price: 320000,
     unit: 'kg',
     category: 'dried',
@@ -24,7 +24,7 @@ const seedProducts = [
     isHot: false
   },
   {
-    name: 'Mực Khô Đà Nẵng',
+    name: 'Mực Khô',
     price: 1600000,
     unit: 'kg',
     category: 'dried',
@@ -32,7 +32,7 @@ const seedProducts = [
     isHot: true
   },
   {
-    name: 'Mực Tươi Đà Nẵng',
+    name: 'Mực Tươi',
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
@@ -40,7 +40,7 @@ const seedProducts = [
     isHot: true
   },
   {
-    name: 'Cá Bớp Tươi Đà Nẵng',
+    name: 'Cá Bớp Tươi',
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
@@ -48,14 +48,14 @@ const seedProducts = [
     isHot: true
   },
     {
-    name: 'Hàu Tươi Đà Nẵng',
+    name: 'Hàu Tươi',
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
     image: '/images/Hàu tươi - Gemini.webp',
     isHot: true
   },    {
-    name: 'Nghêu Tươi Đà Nẵng',
+    name: 'Nghêu Tươi',
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
@@ -63,7 +63,7 @@ const seedProducts = [
     isHot: true
   },
    {
-    name: 'Ốc Hương Tươi Đà Nẵng',
+    name: 'Ốc Hương Tươi',
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
@@ -71,7 +71,7 @@ const seedProducts = [
     isHot: true
   },
   {
-    name: 'Tôm Tươi Đà Nẵng',
+    name: 'Tôm Tươi',
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
