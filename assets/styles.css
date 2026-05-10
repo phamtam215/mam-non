@@ -374,8 +374,37 @@ body {
 }
 
 @media (max-width: 960px) {
+  .nav-inner {
+    min-height: auto;
+    padding: 10px 0;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    width: 100%;
+  }
+
   .nav-links {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 2px 0 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar {
     display: none;
+  }
+
+  .nav-links button,
+  .nav-links a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 0.96rem;
   }
 
   .product-grid {
@@ -396,6 +425,23 @@ body {
 }
 
 @media (max-width: 640px) {
+  .top-header {
+    position: sticky;
+  }
+
+  .brand {
+    gap: 10px;
+  }
+
+  .brand h1 {
+    font-size: 1.08rem;
+  }
+
+  .brand p {
+    font-size: 0.58rem;
+    letter-spacing: 0.8px;
+  }
+
   .brand-logo {
     width: 58px;
     height: 58px;

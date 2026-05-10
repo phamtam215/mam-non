@@ -14,6 +14,15 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Cache static assets (images, css, js) with long expiry
+app.use((req, res, next) => {
+  if (req.path.match(/\.(webp|png|jpg|jpeg|css|js|svg)$/i)) {
+    res.set('Cache-Control', 'public, max-age=31536000, immutable');
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, '.')));
 
 app.get('/robots.txt', (req, res) => {

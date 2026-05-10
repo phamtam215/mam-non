@@ -4,7 +4,7 @@ const seedProducts = [
     price: 320000,
     unit: 'kg',
     category: 'dried',
-    image: '/images/Cá bò - Gemini.png',
+    image: '/images/Cá bò - Gemini.webp',
     isHot: false
   },
   {
@@ -12,7 +12,7 @@ const seedProducts = [
     price: 320000,
     unit: 'kg',
     category: 'dried',
-    image: '/images/Cá chỉ vàng - Gemini.png',
+    image: '/images/Cá chỉ vàng - Gemini.webp',
     isHot: true
   },
   {
@@ -20,7 +20,7 @@ const seedProducts = [
     price: 400000,
     unit: 'kg',
     category: 'dried',
-    image: '/images/Cá đét khô -Gemini.png',
+    image: '/images/Cá đét khô -Gemini.webp',
     isHot: false
   },
   {
@@ -28,7 +28,7 @@ const seedProducts = [
     price: 1600000,
     unit: 'kg',
     category: 'dried',
-    image: '/images/Mực khô - Gemini.png',
+    image: '/images/Mực khô - Gemini.webp',
     isHot: true
   },
   {
@@ -36,7 +36,7 @@ const seedProducts = [
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
-    image: '/images/Mực tươi - Gemini.png',
+    image: '/images/Mực tươi - Gemini.webp',
     isHot: true
   },
   {
@@ -44,7 +44,7 @@ const seedProducts = [
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
-    image: '/images/Cá bớp tươi - Gemini.png',
+    image: '/images/Cá bớp tươi - Gemini.webp',
     isHot: true
   },
     {
@@ -52,14 +52,14 @@ const seedProducts = [
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
-    image: '/images/Hàu tươi - Gemini.png',
+    image: '/images/Hàu tươi - Gemini.webp',
     isHot: true
   },    {
     name: 'Nghêu Tươi Đà Nẵng',
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
-    image: '/images/Nghêu tươi - Gemini.png',
+    image: '/images/Nghêu tươi - Gemini.webp',
     isHot: true
   },
    {
@@ -67,7 +67,7 @@ const seedProducts = [
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
-    image: '/images/Ốc hương tươi - Gemini.png',
+    image: '/images/Ốc hương tươi - Gemini.webp',
     isHot: true
   },
   {
@@ -75,7 +75,7 @@ const seedProducts = [
     price: 1600000,
     unit: 'kg',
     category: 'fresh',
-    image: '/images/Tôm tươi - Gemini.png',
+    image: '/images/Tôm tươi - Gemini.webp',
     isHot: true
   },
 ];
