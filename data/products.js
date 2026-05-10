@@ -1,0 +1,83 @@
+const seedProducts = [
+  {
+    name: 'Cá Bò Khô Đà Nẵng',
+    price: 320000,
+    unit: 'kg',
+    category: 'dried',
+    image: '/images/Cá bò - Gemini.png',
+    isHot: false
+  },
+  {
+    name: 'Cá Chỉ Vàng Khô Ớt',
+    price: 320000,
+    unit: 'kg',
+    category: 'dried',
+    image: '/images/Cá chỉ vàng - Gemini.png',
+    isHot: true
+  },
+  {
+    name: 'Cá Đét Khô',
+    price: 400000,
+    unit: 'kg',
+    category: 'dried',
+    image: '/images/Cá đét khô -Gemini.png',
+    isHot: false
+  },
+  {
+    name: 'Mực Khô Đà Nẵng',
+    price: 1600000,
+    unit: 'kg',
+    category: 'dried',
+    image: '/images/Mực khô - Gemini.png',
+    isHot: true
+  },
+  {
+    name: 'Mực Tươi Đà Nẵng',
+    price: 1600000,
+    unit: 'kg',
+    category: 'fresh',
+    image: '/images/Mực tươi - Gemini.png',
+    isHot: true
+  },
+  {
+    name: 'Cá Bớp Tươi Đà Nẵng',
+    price: 1600000,
+    unit: 'kg',
+    category: 'fresh',
+    image: '/images/Cá bớp tươi - Gemini.png',
+    isHot: true
+  },
+    {
+    name: 'Hàu Tươi Đà Nẵng',
+    price: 1600000,
+    unit: 'kg',
+    category: 'fresh',
+    image: '/images/Hàu tươi - Gemini.png',
+    isHot: true
+  },    {
+    name: 'Nghêu Tươi Đà Nẵng',
+    price: 1600000,
+    unit: 'kg',
+    category: 'fresh',
+    image: '/images/Nghêu tươi - Gemini.png',
+    isHot: true
+  },
+   {
+    name: 'Ốc Hương Tươi Đà Nẵng',
+    price: 1600000,
+    unit: 'kg',
+    category: 'fresh',
+    image: '/images/Ốc hương tươi - Gemini.png',
+    isHot: true
+  },
+  {
+    name: 'Tôm Tươi Đà Nẵng',
+    price: 1600000,
+    unit: 'kg',
+    category: 'fresh',
+    image: '/images/Tôm tươi - Gemini.png',
+    isHot: true
+  },
+];
+
+module.exports = { seedProducts };
