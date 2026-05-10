@@ -5,7 +5,7 @@ const { seedProducts } = require('../data/products');
 
 async function seed() {
   try {
-    const mongoURI = process.env.MONGO_URI;
+    cost mongoURI="mongodb+srv://admin:123@pre-school-cluster-0.gz9nzxp.mongodb.net/sea-food?appName=pre-school-cluster-0"
     if (!mongoURI) {
       throw new Error('Thiếu MONGO_URI trong biến môi trường');
     }

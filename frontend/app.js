@@ -23,25 +23,12 @@ createApp({
     const category = ref('all');
     const loading = ref(false);
     const error = ref('');
+    let activeRequest = null;
 
     const BATCH_SIZE = 12;
     const displayCount = ref(BATCH_SIZE);
 
-    // Danh sách sau khi filter/search
-    const filtered = computed(() => {
-      let list = allProducts.value;
-
-      if (category.value !== 'all') {
-        list = list.filter(p => p.category === category.value);
-      }
-
-      const q = search.value.trim().toLowerCase();
-      if (q) {
-        list = list.filter(p => p.name.toLowerCase().includes(q));
-      }
-
-      return list;
-    });
+    const filtered = computed(() => allProducts.value);
 
     const products = computed(() => 
       filtered.value.slice(0, displayCount.value)
@@ -55,14 +42,37 @@ createApp({
       displayCount.value += BATCH_SIZE;
     };
 
-    watch([search, category], () => { displayCount.value = BATCH_SIZE; });
+    watch([search, category], () => {
+      displayCount.value = BATCH_SIZE;
+      fetchProducts();
+    });
 
     const fetchProducts = async () => {
+      if (activeRequest) {
+        activeRequest.abort();
+      }
+
+      const requestController = new AbortController();
+      activeRequest = requestController;
       loading.value = true;
       error.value = '';
 
       try {
-        const response = await fetch(`${API_BASE}/api/products`);
+        const params = new URLSearchParams();
+
+        if (search.value.trim()) {
+          params.set('search', search.value.trim());
+        }
+
+        if (category.value !== 'all') {
+          params.set('category', category.value);
+        }
+
+        const query = params.toString();
+        const response = await fetch(
+          `${API_BASE}/api/products${query ? `?${query}` : ''}`,
+          { signal: requestController.signal }
+        );
 
         if (!response.ok) {
           throw new Error('Fetch products failed');
@@ -71,9 +81,16 @@ createApp({
         const result = await response.json();
         allProducts.value = result.data || [];
       } catch (err) {
+        if (err.name === 'AbortError') {
+          return;
+        }
+
         error.value = 'Không thể tải sản phẩm. Vui lòng thử lại.';
       } finally {
-        loading.value = false;
+        if (activeRequest === requestController) {
+          activeRequest = null;
+          loading.value = false;
+        }
       }
     };
 
@@ -130,6 +147,10 @@ createApp({
     });
 
     onBeforeUnmount(() => {
+      if (activeRequest) {
+        activeRequest.abort();
+      }
+
       window.removeEventListener('hashchange', onHashChange);
     });
 
