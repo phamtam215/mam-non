@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gym-tam-dai.vercel.app/</loc>
+    <loc>https://haisandanang.top/</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://gym-tam-dai.vercel.app/?category=fresh</loc>
+    <loc>https://haisandanang.top/?category=fresh</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gym-tam-dai.vercel.app/?category=dried</loc>
+    <loc>https://haisandanang.top/?category=dried</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gym-tam-dai.vercel.app/?search=mực%20khô</loc>
+    <loc>https://haisandanang.top/?search=mực%20khô</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gym-tam-dai.vercel.app/?search=cá%20bò</loc>
+    <loc>https://haisandanang.top/?search=cá%20bò</loc>
     <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

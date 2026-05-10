@@ -8,4 +8,4 @@ Allow: /images/
 Disallow: /node_modules/
 Disallow: /config/
 
-Sitemap: https://gym-tam-dai.vercel.app/sitemap.xml
+Sitemap: https://haisandanang.top/sitemap.xml
