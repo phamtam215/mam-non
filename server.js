@@ -14,15 +14,17 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '.'))); // Serve toàn bộ thư mục hiện tại
 app.get('/api/config', (req, res) => {
   res.json({ port: PORT });
 });
 app.use('/api/products', productRoutes);
-app.use('/frontend', express.static(path.join(__dirname, 'frontend')));
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-app.use('/images', express.static(path.join(__dirname, 'images')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end(); // No Content
 });
 
 app.use((err, req, res, next) => {
