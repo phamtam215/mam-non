@@ -19,7 +19,6 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text-main);
   background: linear-gradient(180deg, #f1f7fb 0%, var(--bg-soft) 45%, #d8e6ef 100%);
-  padding-top: var(--header-height);
 }
 
 .container {
@@ -195,6 +194,18 @@ body {
   padding: 24px 0 62px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .search-wrap {
   position: relative;
   width: min(1120px, 92vw);
@@ -202,12 +213,13 @@ body {
   margin-top: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 8px 0;
   background: linear-gradient(180deg, rgba(241, 247, 251, 0.94) 0%, rgba(241, 247, 251, 0.74) 100%);
 }
 
 .search-wrap input {
-  width: min(560px, 100%);
+  width: min(620px, 100%);
   padding: 13px 16px;
   border-radius: 12px;
   border: 1px solid #c8dce9;

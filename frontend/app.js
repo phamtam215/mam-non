@@ -55,9 +55,9 @@ createApp({
       displayCount.value += BATCH_SIZE;
     };
 
-    watch([search, category], () => { 
+    watch([search, category], () => {
+      // Reset visible batch when client-side filters change.
       displayCount.value = BATCH_SIZE;
-      fetchProducts();
     });
 
     const fetchProducts = async () => {
@@ -65,20 +65,7 @@ createApp({
       error.value = '';
 
       try {
-        const params = new URLSearchParams();
-
-        if (search.value.trim()) {
-          params.set('search', search.value.trim());
-        }
-
-        if (category.value !== 'all') {
-          params.set('category', category.value);
-        }
-
-        const query = params.toString();
-        const response = await fetch(
-          `${API_BASE}/api/products${query ? `?${query}` : ''}`
-        );
+        const response = await fetch(`${API_BASE}/api/products`);
 
         if (!response.ok) {
           throw new Error('Fetch products failed');
