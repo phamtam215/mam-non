@@ -4,8 +4,8 @@ export const HeroSection = {
     <section class="hero">
       <div class="container hero-inner">
         <div class="hero-content">
-          <h2>Hải Sản Sạch<br><span>Chuẩn Vị Đà Nẵng</span></h2>
-          <p>Chuyên cung cấp sỉ lẻ hải sản tươi sống trong ngày và đặc sản khô chất lượng cao.</p>
+          <h1>Hải Sản Đà Nẵng<br><span>Tươi Sống & Đặc Sản Khô</span></h1>
+          <p>Chuyên cung cấp sỉ lẻ hải sản tươi sống trong ngày, mực khô, cá bò khô và đặc sản đà nẵng chất lượng cao. Hải sản sạch, chuẩn vị Đà Nẵng - Giao hàng nhanh toàn thành phố.</p>
           <div class="hero-actions">
             <button class="btn-primary" @click="$emit('go-products')">Xem sản phẩm</button>
             <a class="btn-outline" href="tel:0764933884">Hotline: 0764.933.884</a>

@@ -14,7 +14,16 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '.'))); // Serve toàn bộ thư mục hiện tại
+app.use(express.static(path.join(__dirname, '.')));
+
+app.get('/robots.txt', (req, res) => {
+  res.sendFile(path.join(__dirname, 'robots.txt'));
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
 app.get('/api/config', (req, res) => {
   res.json({ port: PORT });
 });
@@ -24,7 +33,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/favicon.ico', (req, res) => {
-  res.status(204).end(); // No Content
+  res.status(204).end();
 });
 
 app.use((err, req, res, next) => {
@@ -37,7 +46,6 @@ app.use((err, req, res, next) => {
 
 const PORT = Number(process.env.PORT) || 3000;
 
-// Chỉ chạy bootstrap nếu không phải Vercel environment
 if (process.env.VERCEL !== '1') {
   async function bootstrap() {
     await connectDB();
@@ -55,9 +63,7 @@ if (process.env.VERCEL !== '1') {
 
   bootstrap();
 } else {
-  // Vercel environment - khởi tạo database khi cần
   connectDB().catch(err => console.error('DB connection error:', err));
 }
 
-// Export app cho Vercel serverless
 module.exports = app;

@@ -24,6 +24,7 @@ export const ProductGrid = {
   emits: ['load-more'],
   template: `
     <section>
+      <h2 class="sr-only">Danh sách hải sản tươi sống và đặc sản khô đà nẵng</h2>
       <p v-if="loading && products.length === 0" class="state-text">Đang tải sản phẩm...</p>
       <p v-else-if="error" class="state-text state-error">{{ error }}</p>
       <p v-else-if="products.length === 0" class="state-text">Không tìm thấy sản phẩm phù hợp.</p>
@@ -31,7 +32,7 @@ export const ProductGrid = {
       <div v-else class="product-grid">
         <article v-for="product in products" :key="product._id" class="product-card">
           <span v-if="product.isHot" class="hot-tag">BÁN CHẠY</span>
-          <img :src="product.image" :alt="product.name">
+          <img :src="product.image" :alt="product.name + ' - hải sản đà nẵng'" loading="lazy">
           <div class="card-body">
             <small>{{ product.category === 'fresh' ? 'HẢI SẢN TƯƠI' : 'HẢI SẢN KHÔ' }}</small>
             <h3>{{ product.name }}</h3>

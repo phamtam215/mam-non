@@ -55,14 +55,30 @@ createApp({
       displayCount.value += BATCH_SIZE;
     };
 
-    watch([search, category], () => { displayCount.value = BATCH_SIZE; });
+    watch([search, category], () => { 
+      displayCount.value = BATCH_SIZE;
+      fetchProducts();
+    });
 
     const fetchProducts = async () => {
       loading.value = true;
       error.value = '';
 
       try {
-        const response = await fetch(`${API_BASE}/api/products`);
+        const params = new URLSearchParams();
+
+        if (search.value.trim()) {
+          params.set('search', search.value.trim());
+        }
+
+        if (category.value !== 'all') {
+          params.set('category', category.value);
+        }
+
+        const query = params.toString();
+        const response = await fetch(
+          `${API_BASE}/api/products${query ? `?${query}` : ''}`
+        );
 
         if (!response.ok) {
           throw new Error('Fetch products failed');

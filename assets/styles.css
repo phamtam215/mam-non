@@ -19,6 +19,7 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text-main);
   background: linear-gradient(180deg, #f1f7fb 0%, var(--bg-soft) 45%, #d8e6ef 100%);
+  padding-top: var(--header-height);
 }
 
 .container {
@@ -96,8 +97,8 @@ body {
 }
 
 .hero {
-  position: sticky;
-  top: var(--header-height);
+  position: relative;
+  top: auto;
   z-index: 10;
   overflow: hidden;
   padding: 68px 0 74px;
