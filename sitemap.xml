@@ -2,31 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://haisandanang.top/</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://haisandanang.top/?category=fresh</loc>
-    <lastmod>2026-05-10</lastmod>
+    <loc>https://haisandanang.top/?category=kho</loc>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://haisandanang.top/?category=dried</loc>
-    <lastmod>2026-05-10</lastmod>
+    <loc>https://haisandanang.top/?category=rim</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://haisandanang.top/?category=mam</loc>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://haisandanang.top/?search=mực%20khô</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://haisandanang.top/?search=cá%20bò</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

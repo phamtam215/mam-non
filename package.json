@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "optimize-images": "bash scripts/optimize-images.sh"
   },
   "dependencies": {
     "cors": "^2.8.6",

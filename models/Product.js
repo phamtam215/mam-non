@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { CATEGORY_TYPES } = require('../data/categories');
 
 const productSchema = new mongoose.Schema(
   {
@@ -18,7 +19,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ['fresh', 'dried'],
+      enum: CATEGORY_TYPES,
       required: true
     },
     image: {

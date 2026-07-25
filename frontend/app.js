@@ -1,21 +1,23 @@
-import { createApp, computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
+import { createApp, computed, onBeforeUnmount, onMounted, ref, watch } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
 import { SiteHeader } from './components/SiteHeader.js';
-import { HeroSection } from './components/HeroSection.js';
+import { HeroSlider } from './components/HeroSlider.js';
 import { SearchBar } from './components/SearchBar.js';
 import { CategoryTabs } from './components/CategoryTabs.js';
 import { ProductGrid } from './components/ProductGrid.js';
 import { SiteFooter } from './components/SiteFooter.js';
+import { FloatingContact } from './components/FloatingContact.js';
 
 const API_BASE = window.location.origin;
 
 createApp({
   components: {
     SiteHeader,
-    HeroSection,
+    HeroSlider,
     SearchBar,
     CategoryTabs,
     ProductGrid,
-    SiteFooter
+    SiteFooter,
+    FloatingContact
   },
   setup() {
     const allProducts = ref([]);
@@ -80,7 +82,7 @@ createApp({
       }
     };
 
-    const formatPrice = (price, unit) => `${Number(price).toLocaleString('vi-VN')}d/${unit || 'kg'}`;
+    const formatPrice = (price, unit) => `${Number(price).toLocaleString('vi-VN')}đ/${unit || 'kg'}`;
 
     const goProducts = () => {
       const section = document.getElementById('products');
@@ -89,23 +91,10 @@ createApp({
       }
     };
 
-    const goFooter = async () => {
-      const footer = document.getElementById('footer');
-      if (!footer) return;
-
-      // Expand all current filtered products so the footer position is stable.
-      displayCount.value = filtered.value.length;
-      await nextTick();
-
-      footer.scrollIntoView({ behavior: 'smooth' });
-
-      requestAnimationFrame(() => {
-        footer.scrollIntoView({ behavior: 'smooth' });
-      });
-
-      if (window.location.hash !== '#footer') {
-        history.replaceState(null, '', '#footer');
-      }
+    // Bảng giá giờ là một slide trong slider: nhảy thẳng tới slide đó.
+    const slider = ref(null);
+    const goMenu = () => {
+      if (slider.value) slider.value.showMenuSlide();
     };
 
     const scrollToHashTarget = (hash, smooth = true) => {
@@ -122,11 +111,6 @@ createApp({
     };
 
     onMounted(async () => {
-      if (window.location.hash === '#footer') {
-        history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
-        window.scrollTo({ top: 0, behavior: 'auto' });
-      }
-
       await fetchProducts();
 
       window.addEventListener('hashchange', onHashChange);
@@ -144,20 +128,21 @@ createApp({
       error,
       formatPrice,
       goProducts,
-        goFooter,
+      goMenu,
+      slider,
       hasMore,
       loadMore
     };
   },
   template: `
     <div class="page-shell">
-        <site-header
-          :category="category"
-          @change-category="category = $event"
-          @go-footer="goFooter"
-        ></site-header>
-      <hero-section @go-products="goProducts"></hero-section>
-        <search-bar v-model="search"></search-bar>
+      <site-header
+        :category="category"
+        @change-category="category = $event"
+        @go-menu="goMenu"
+      ></site-header>
+      <hero-slider ref="slider" @go-products="goProducts"></hero-slider>
+      <search-bar v-model="search"></search-bar>
 
       <main id="products" class="container content-wrap">
         <category-tabs :category="category" @change-category="category = $event"></category-tabs>
@@ -172,6 +157,7 @@ createApp({
       </main>
 
       <site-footer></site-footer>
+      <floating-contact></floating-contact>
     </div>
   `
 }).mount('#app');

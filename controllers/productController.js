@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const { CATEGORY_TYPES } = require('../data/categories');
 
 async function getProducts(req, res, next) {
   try {
@@ -6,7 +7,7 @@ async function getProducts(req, res, next) {
 
     const query = {};
 
-    if (category === 'fresh' || category === 'dried') {
+    if (CATEGORY_TYPES.includes(category)) {
       query.category = category;
     }
 

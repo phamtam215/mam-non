@@ -4,7 +4,7 @@ export const SiteFooter = {
       <div class="container footer-grid">
         <div>
           <h3>Hải Sản PATA - Đà Nẵng</h3>
-          <p>Chuyên cung cấp hải sản tươi sống trong ngày, mực khô, cá bò khô và đặc sản Đà Nẵng chất lượng cao. Sỉ - Lẻ - Giao hàng nhanh.</p>
+          <p>Chuyên cung cấp sỉ lẻ đặc sản khô, đặc sản rim và nước mắm nguyên chất Đà Nẵng. Hải sản sạch, không chất bảo quản, chuẩn vị nhà làm - Giao hàng toàn quốc.</p>
         </div>
         <div>
           <h4>Liên hệ & Địa chỉ</h4>
